@@ -35,6 +35,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""cf2f6a9c-f291-423d-bd88-718296c31fda"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -103,28 +112,11 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                }
-            ]
-        },
-        {
-            ""name"": ""MouseLook"",
-            ""id"": ""5db5d6f0-548d-494e-838b-fa75c35b166a"",
-            ""actions"": [
-                {
-                    ""name"": ""Look"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""981ae3ba-db1e-4954-8b92-1d47dfc2ec6d"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""687d7627-fc71-43b0-9190-b69e824ebf47"",
-                    ""path"": ""<Gamepad>/rightStick"",
+                    ""id"": ""c18e6c30-30d6-4a80-b6b0-003d13d1eab3"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -134,8 +126,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""791f10b1-4599-4ee0-9126-e4a9eb550cfa"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""id"": ""5be27bfb-0ec2-4787-be6f-9b6587d043cd"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -151,9 +143,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // DefaultPlayer
         m_DefaultPlayer = asset.FindActionMap("DefaultPlayer", throwIfNotFound: true);
         m_DefaultPlayer_Walk = m_DefaultPlayer.FindAction("Walk", throwIfNotFound: true);
-        // MouseLook
-        m_MouseLook = asset.FindActionMap("MouseLook", throwIfNotFound: true);
-        m_MouseLook_Look = m_MouseLook.FindAction("Look", throwIfNotFound: true);
+        m_DefaultPlayer_Look = m_DefaultPlayer.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -214,11 +204,13 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_DefaultPlayer;
     private IDefaultPlayerActions m_DefaultPlayerActionsCallbackInterface;
     private readonly InputAction m_DefaultPlayer_Walk;
+    private readonly InputAction m_DefaultPlayer_Look;
     public struct DefaultPlayerActions
     {
         private @PlayerControls m_Wrapper;
         public DefaultPlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_DefaultPlayer_Walk;
+        public InputAction @Look => m_Wrapper.m_DefaultPlayer_Look;
         public InputActionMap Get() { return m_Wrapper.m_DefaultPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -231,6 +223,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Walk.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnWalk;
                 @Walk.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnWalk;
                 @Walk.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnWalk;
+                @Look.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
+                @Look.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
+                @Look.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
             }
             m_Wrapper.m_DefaultPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -238,49 +233,16 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Walk.started += instance.OnWalk;
                 @Walk.performed += instance.OnWalk;
                 @Walk.canceled += instance.OnWalk;
-            }
-        }
-    }
-    public DefaultPlayerActions @DefaultPlayer => new DefaultPlayerActions(this);
-
-    // MouseLook
-    private readonly InputActionMap m_MouseLook;
-    private IMouseLookActions m_MouseLookActionsCallbackInterface;
-    private readonly InputAction m_MouseLook_Look;
-    public struct MouseLookActions
-    {
-        private @PlayerControls m_Wrapper;
-        public MouseLookActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Look => m_Wrapper.m_MouseLook_Look;
-        public InputActionMap Get() { return m_Wrapper.m_MouseLook; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MouseLookActions set) { return set.Get(); }
-        public void SetCallbacks(IMouseLookActions instance)
-        {
-            if (m_Wrapper.m_MouseLookActionsCallbackInterface != null)
-            {
-                @Look.started -= m_Wrapper.m_MouseLookActionsCallbackInterface.OnLook;
-                @Look.performed -= m_Wrapper.m_MouseLookActionsCallbackInterface.OnLook;
-                @Look.canceled -= m_Wrapper.m_MouseLookActionsCallbackInterface.OnLook;
-            }
-            m_Wrapper.m_MouseLookActionsCallbackInterface = instance;
-            if (instance != null)
-            {
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
             }
         }
     }
-    public MouseLookActions @MouseLook => new MouseLookActions(this);
+    public DefaultPlayerActions @DefaultPlayer => new DefaultPlayerActions(this);
     public interface IDefaultPlayerActions
     {
         void OnWalk(InputAction.CallbackContext context);
-    }
-    public interface IMouseLookActions
-    {
         void OnLook(InputAction.CallbackContext context);
     }
 }

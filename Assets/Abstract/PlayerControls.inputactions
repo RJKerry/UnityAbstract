@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Look",
+                    "type": "PassThrough",
+                    "id": "cf2f6a9c-f291-423d-bd88-718296c31fda",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -81,28 +90,11 @@
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
-                }
-            ]
-        },
-        {
-            "name": "MouseLook",
-            "id": "5db5d6f0-548d-494e-838b-fa75c35b166a",
-            "actions": [
-                {
-                    "name": "Look",
-                    "type": "PassThrough",
-                    "id": "981ae3ba-db1e-4954-8b92-1d47dfc2ec6d",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
+                },
                 {
                     "name": "",
-                    "id": "687d7627-fc71-43b0-9190-b69e824ebf47",
-                    "path": "<Gamepad>/rightStick",
+                    "id": "c18e6c30-30d6-4a80-b6b0-003d13d1eab3",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -112,8 +104,8 @@
                 },
                 {
                     "name": "",
-                    "id": "791f10b1-4599-4ee0-9126-e4a9eb550cfa",
-                    "path": "<Mouse>/delta",
+                    "id": "5be27bfb-0ec2-4787-be6f-9b6587d043cd",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
