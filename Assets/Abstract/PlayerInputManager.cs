@@ -19,6 +19,8 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     public float movementSpeed = 5f;
     public float mouseSpeed = 100f;
 
+    private float xRot = 0f, yRot = 0f;
+
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -61,49 +63,16 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         if (context.performed)
         {
             Vector2 mouseDelta = context.ReadValue<Vector2>();
-            float mouseY = mouseDelta.y;
-            float mouseX = mouseDelta.x;
-            
-            /*float currentXRot = transform.localEulerAngles.x; //current rotation
-            float deltaRot = currentXRot+mouseY; //the next rotation it wants to be
-            float resultantCheck = deltaRot - currentXRot; //1 if its mouse up moving up or mouse down moving down, 0 otherwise (doesnt need to check. yay optimisation)
-            float clampVal = 90; //this is gonna be 90 either way. if we have a negative value going down we invert it before the check
-            float clampScaleCheck = mouseY + 1 % mouseY; //does it return a number above 1 
-            Debug.Log(resultantCheck);*/
+            xRot -= mouseDelta.y;
+            yRot += mouseDelta.x;
 
-            
-            /*//This can be reevaluated. Case 1 and -1 have the means to have the same calculation. if either one is valid do the same thing
-            //else
-            switch (resultantCheck)
-            {
-                case 1: //resultant check case 1 evaluates (Rotation+1)-Rotation +ve mouseDelta Y && +ve starting rotation i.e. +ve up
-                    /*if (!deltaRot - clampVal < 1) //if, while having a positive rot with a positive delta, the rotation-clamp max is !<1, it needs clamping
-                        mouseY = 0;#1#
-                    break;
-                case -1: // -ve mouse delta && -ve starting position
-                    /*if (!deltaRot + clampVal < 1)
-                        mouseY = 0;#1#
-                    break;
-                default: // Do nothing if it doesnt fall within these categories
-                    
-                    break;
-            }*/
+            xRot = Mathf.Clamp(xRot, -90f, 90f);
 
-            //-0.5 + 1 = 0.5    0.5/-0.5 
-            //if we wanna do the clamping were gonna need to either make our own or come up with a different approach we know works, so changing
-            //how we apply and calculate the X rotation should allow us to clamp it. Rather than add the increment each time, add the increment to the value first,
-            //then check its within the clamp range, and if not, clamp it
-            
-            //float rot = cameraObject.transform.eulerAngles.x+(mouseY*Time.deltaTime*mouseSpeed);
-            //cameraObject.transform.eulerAngles.x = Mathf.Clamp(rot, -89f, 89f);
+            //gameObject.transform.Rotate(transform.up, mouseX * Time.deltaTime * mouseSpeed);
+            //cameraObject.transform.Rotate(cameraObject.transform.right, -mouseY*Time.deltaTime*mouseSpeed, Space.World);
 
-            
-            //Vector3 cameraRotation = cameraObject.transform.localEulerAngles;
-            
-            //cameraRotation.x = Mathf.Clamp(cameraRotation.x - mouseY * Time.deltaTime * mouseSpeed, -89f, 89);
-
-            gameObject.transform.Rotate(transform.up, mouseX * Time.deltaTime * mouseSpeed);
-            cameraObject.transform.Rotate(cameraObject.transform.right, -mouseY*Time.deltaTime*mouseSpeed, Space.World);
+            transform.eulerAngles = new Vector3(0, yRot, 0);
+            cameraObject.transform.localEulerAngles = new Vector3(xRot, 0, 0);
         }
     }
 
