@@ -7,13 +7,13 @@ using UnityEngine.Serialization;
 
 public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerActions
 {
-    public GameObject cameraObject;
+    public GameObject cameraObject; //the gameobject the cinemachine brain is attached to
     public CharacterController playerCharacterController;
     public PlayerControls playerControls;
+    public ItemManager playerItemManager;
     
-    public Vector3 RawInputDirection;
-    //public Vector3 RotatedInputDirection;
-    
+    public Vector3 rawInputDirection; //Raw directional input translated to world space
+
     [SerializeField] private Vector3 cameraForward;
     
     public float movementSpeed = 5f;
@@ -21,6 +21,7 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
 
     private float xRot = 0f, yRot = 0f;
 
+    public int interactDist = 5;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -32,37 +33,29 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
 
     private void Update()
     {
-        //Apply movement to the player
-
-
-        //cameraForward = cameraObject.transform.TransformDirection(Vector3.forward);
-        //RotatedInputDirection = Quaternion.LookRotation(cameraForward, Vector3.up) * RawInputDirection;
-        /*Vector3 fwd = transform.forward * RawInputDirection.z;
-        Vector3 rgt = transform.right * RawInputDirection.x;*/
-        
-        
-        Vector3 relativeMovement = transform.forward * RawInputDirection.z + transform.right * RawInputDirection.x;
+        ApplyMovement();
+    }
+    private void ApplyMovement()
+    {
+        Vector3 relativeMovement = transform.forward * rawInputDirection.z + transform.right * rawInputDirection.x;
         playerCharacterController.Move( movementSpeed * Time.deltaTime * relativeMovement);
         if (!playerCharacterController.isGrounded) playerCharacterController.Move(Physics.gravity);
-        Debug.Log("OnGround?: " + playerCharacterController.isGrounded);
     }
-
     public void OnWalk(InputAction.CallbackContext context)
     {
-        RawInputDirection = Vector3.zero;
+        rawInputDirection = Vector3.zero;
         if (context.performed)
         {
             Vector2 input = context.ReadValue<Vector2>();
-            RawInputDirection = new Vector3(input.x, 0, input.y);
+            rawInputDirection = new Vector3(input.x, 0, input.y);
             //Vector3 projectedInput = Vector3.ProjectOnPlane(new Vector3(input.x, 0, input.y), Vector3.up);
         }
     }
-
     public void OnLook(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            Vector2 mouseDelta = context.ReadValue<Vector2>();
+            Vector2 mouseDelta = context.ReadValue<Vector2>() * mouseSpeed * Time.deltaTime;
             xRot -= mouseDelta.y;
             yRot += mouseDelta.x;
 
@@ -75,9 +68,16 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
             cameraObject.transform.localEulerAngles = new Vector3(xRot, 0, 0);
         }
     }
-
-
-
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        Debug.Log("Interact key pressed");
+    }
+    public void OnUseItem(InputAction.CallbackContext context)
+    {
+        if(context.performed) playerItemManager?.UseItem();
+    }
+    
+    #region Input Enable/Disable
     private void OnEnable()
     {
         playerControls.Enable();
@@ -87,4 +87,5 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     {
         playerControls.Disable();
     }
+    #endregion
 }

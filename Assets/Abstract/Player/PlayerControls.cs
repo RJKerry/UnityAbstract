@@ -44,6 +44,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""626e0f56-ec2d-4a79-b2f3-10383d993f8b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""92b062a8-0346-4b04-bbc3-d03b60d8679d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -134,6 +152,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13e5aa0d-f0fa-46a0-90d2-a89318c49d22"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04f65ea8-3afe-49ac-a75e-a822f894279c"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7386272b-4dea-4e33-878e-6f18f4cba8c5"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a9987dc-697d-4f2e-9e9e-0003fb4fc41e"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -144,6 +206,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_DefaultPlayer = asset.FindActionMap("DefaultPlayer", throwIfNotFound: true);
         m_DefaultPlayer_Walk = m_DefaultPlayer.FindAction("Walk", throwIfNotFound: true);
         m_DefaultPlayer_Look = m_DefaultPlayer.FindAction("Look", throwIfNotFound: true);
+        m_DefaultPlayer_Interact = m_DefaultPlayer.FindAction("Interact", throwIfNotFound: true);
+        m_DefaultPlayer_UseItem = m_DefaultPlayer.FindAction("UseItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,12 +269,16 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IDefaultPlayerActions m_DefaultPlayerActionsCallbackInterface;
     private readonly InputAction m_DefaultPlayer_Walk;
     private readonly InputAction m_DefaultPlayer_Look;
+    private readonly InputAction m_DefaultPlayer_Interact;
+    private readonly InputAction m_DefaultPlayer_UseItem;
     public struct DefaultPlayerActions
     {
         private @PlayerControls m_Wrapper;
         public DefaultPlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_DefaultPlayer_Walk;
         public InputAction @Look => m_Wrapper.m_DefaultPlayer_Look;
+        public InputAction @Interact => m_Wrapper.m_DefaultPlayer_Interact;
+        public InputAction @UseItem => m_Wrapper.m_DefaultPlayer_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_DefaultPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -226,6 +294,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
+                @Interact.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnInteract;
+                @UseItem.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnUseItem;
+                @UseItem.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnUseItem;
+                @UseItem.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnUseItem;
             }
             m_Wrapper.m_DefaultPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -236,6 +310,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
+                @UseItem.started += instance.OnUseItem;
+                @UseItem.performed += instance.OnUseItem;
+                @UseItem.canceled += instance.OnUseItem;
             }
         }
     }
@@ -244,5 +324,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
 }
