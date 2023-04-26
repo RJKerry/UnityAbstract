@@ -29,6 +29,8 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
 
         playerCharacterController = GetComponent<CharacterController>();
         cameraObject = GetComponentInChildren<CinemachineVirtualCamera>().gameObject;
+
+        playerItemManager = GetComponent<ItemManager>();
     }
 
     private void Update()
@@ -57,13 +59,9 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         {
             Vector2 mouseDelta = context.ReadValue<Vector2>() * mouseSpeed * Time.deltaTime;
             xRot -= mouseDelta.y;
-            yRot += mouseDelta.x;
-
             xRot = Mathf.Clamp(xRot, -90f, 90f);
-
-            //gameObject.transform.Rotate(transform.up, mouseX * Time.deltaTime * mouseSpeed);
-            //cameraObject.transform.Rotate(cameraObject.transform.right, -mouseY*Time.deltaTime*mouseSpeed, Space.World);
-
+            yRot += mouseDelta.x;
+            
             transform.eulerAngles = new Vector3(0, yRot, 0);
             cameraObject.transform.localEulerAngles = new Vector3(xRot, 0, 0);
         }
@@ -76,6 +74,26 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     {
         if(context.performed) playerItemManager?.UseItem();
     }
+
+    public void OnCycleItem(InputAction.CallbackContext context)
+    {
+        if(context.performed) playerItemManager.CycleItem((int)context.ReadValue<float>(), WeaponSwitchTypes.Cycle);
+    }
+
+    #region ItemKeys
+    public void OnSelectSlot1(InputAction.CallbackContext context)
+    {
+        if(context.performed) playerItemManager.CycleItem(0, WeaponSwitchTypes.Absolute);
+    }
+    public void OnSelectSlot2(InputAction.CallbackContext context)
+    {
+        if(context.performed) playerItemManager.CycleItem(1, WeaponSwitchTypes.Absolute);
+    }
+    public void OnSelectSlot3(InputAction.CallbackContext context)
+    {
+        if(context.performed) playerItemManager.CycleItem(2, WeaponSwitchTypes.Absolute);
+    }
+    #endregion
     
     #region Input Enable/Disable
     private void OnEnable()
