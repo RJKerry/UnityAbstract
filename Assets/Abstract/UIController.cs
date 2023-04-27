@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        changeLives(2);
+        changeLives(4);
     }
 
     // Update is called once per frame
