@@ -41,7 +41,7 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     {
         Vector3 relativeMovement = transform.forward * rawInputDirection.z + transform.right * rawInputDirection.x;
         playerCharacterController.Move( movementSpeed * Time.deltaTime * relativeMovement);
-        if (!playerCharacterController.isGrounded) playerCharacterController.Move(Physics.gravity);
+        if (!playerCharacterController.isGrounded) playerCharacterController.Move(Physics.gravity * Time.deltaTime);
     }
     public void OnWalk(InputAction.CallbackContext context)
     {
