@@ -17,13 +17,14 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     [SerializeField] private Vector3 cameraForward;
     
     public float movementSpeed = 5f;
-    public float mouseSpeed = 100f;
+    public float mouseSpeed = 10f;
 
     private float xRot = 0f, yRot = 0f;
 
     public int interactDist = 5;
     private void Awake()
     {
+        mouseSpeed = mouseSpeed * 10;
         playerControls = new PlayerControls();
         playerControls.DefaultPlayer.SetCallbacks(this);
 
