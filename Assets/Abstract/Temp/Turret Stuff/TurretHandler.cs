@@ -4,7 +4,9 @@ using UnityEngine;
 public class TurretHandler : MonoBehaviour
 {
     public Transform player;
-    public List<Transform> turrets;
+    public List<Transform> turrets; //Refactor
+    private List<Turret> Turrets; //now working with turret class
+
     public float lookSpeed;
     public GameObject explosionPrefab;
     public float activationDistance;
@@ -13,6 +15,7 @@ public class TurretHandler : MonoBehaviour
     private Dictionary<Transform, GameObject> explosionObjects = new Dictionary<Transform, GameObject>();
 
     private Dictionary<Transform, Quaternion> initialRotations = new Dictionary<Transform, Quaternion>();
+
 
     private void Start()
     {
@@ -29,28 +32,31 @@ public class TurretHandler : MonoBehaviour
 
     private void Update()
     {
-        foreach (Transform turret in turrets)
+        foreach (Turret turret in Turrets)
         {
-            if (!turretStatuses[turret])
+            if (!turret.TurretActive)
             {
                 // Skip this turret if it's disabled
                 continue;
             }
 
             // calculate the dot product between the turret's forward direction and the vector from the turret to the player
-            Vector3 toPlayer = player.position - turret.position;
-            float dot = Vector3.Dot(turret.forward, toPlayer.normalized);
+            Transform currentTurretTransform = turret.GetTransform();
+            
+            Vector3 toPlayer = player.position - currentTurretTransform.position;
+            float dot = Vector3.Dot(currentTurretTransform.forward, toPlayer.normalized);
             float distance = toPlayer.magnitude;
+
             if (dot > 0.0f && dot > Mathf.Cos(Mathf.PI / 3.0f) && distance < activationDistance && distance > 1f)
             {
-                Vector3 targetDirection = player.position - turret.Find("Top").position;
+                Vector3 targetDirection = player.position - turret.TurretHead.transform.position;
                 Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-                turret.Find("Top").rotation = Quaternion.Slerp(turret.Find("Top").rotation, targetRotation, lookSpeed * Time.deltaTime);
+                turret.TurretHead.transform.rotation = Quaternion.Slerp(turret.TurretHead.transform.rotation, targetRotation, lookSpeed * Time.deltaTime);
             }
             // otherwise, rotate the top of the turret freely
             else
             {
-                Transform turretTop = turret.Find("Top");
+                Transform turretTop = turret.TurretHead.transform;
 
                 // Calculate the new rotation angle
                 float newAngle = Mathf.PingPong(Time.time * 30f * lookSpeed, 180f) - 90f;
@@ -60,6 +66,7 @@ public class TurretHandler : MonoBehaviour
                 turretTop.rotation = Quaternion.Slerp(turretTop.rotation, newRotation, lookSpeed * Time.deltaTime);
             }
         }
+
         // Check if the player has pressed the 'X' key
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -81,7 +88,6 @@ public class TurretHandler : MonoBehaviour
         }
     }
 
-
     private Transform getNearestTurret()
     {
         float closestDistance = Mathf.Infinity;
@@ -95,9 +101,7 @@ public class TurretHandler : MonoBehaviour
                 closestDistance = distance;
             }
         }
-
         return closestTurret;
-        
     }
 
     // Disable a turret by setting its status to false and instantiate explosion effect

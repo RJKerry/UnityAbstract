@@ -11,3 +11,8 @@ public interface IDamageable
 {
     void OnDamage();
 }
+
+public interface ICanBeDisabled
+{
+    void OnDisableInteract();
+}
