@@ -16,7 +16,7 @@ public class Portal : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-
+    
             RaycastHit hit;
             if (Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out hit))
             {
