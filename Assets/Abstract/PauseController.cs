@@ -25,11 +25,20 @@ public class PauseController : MonoBehaviour
         //For some reason button is not a component??
 
         //This is not the best way of doing it but it works for now 
-        resumeButton = GameObject.FindGameObjectWithTag("ResumeButton").GetComponent<Button>();
-        quitButton = GameObject.FindGameObjectWithTag("ExitButton").GetComponent<Button>();
 
-        resumeButton.clicked += TogglePause;
-        quitButton.clicked += Quit;
+
+        //THIS DOESNT WORK
+        /*UIDocument uiDoc = FindObjectOfType<UIDocument>();
+       resumeButton = uiDoc.rootVisualElement.Query<Button>("ResumeButton");
+        quitButton = uiDoc.rootVisualElement.Query<Button>("ExitButton");*/ 
+
+        //THIS DOESNT WORK EITHER
+        //resumeButton = GameObject.FindGameObjectWithTag("ResumeButton").GetComponent<Button>();
+        //quitButton = GameObject.FindGameObjectWithTag("ExitButton").GetComponent<Button>();
+
+        //These need to happen, however null references keep happ[ening
+        /*resumeButton.clicked += TogglePause;
+        quitButton.clicked += Quit;*/
 
         Debug.Log(pauseMenu);
     }
