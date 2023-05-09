@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
@@ -11,6 +12,8 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     public CharacterController playerCharacterController;
     public PlayerControls playerControls;
     public ItemManager playerItemManager;
+    private PauseController playerPauseController;
+    private GameObject pauseMenu;
     
     public Vector3 rawInputDirection; //Raw directional input translated to world space
 
@@ -24,6 +27,8 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     public int interactDist = 5;
     private void Awake()
     {
+        playerPauseController = GetComponent<PauseController>();
+
         mouseSpeed = mouseSpeed * 10;
         playerControls = new PlayerControls();
         playerControls.DefaultPlayer.SetCallbacks(this);
@@ -96,7 +101,13 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         if(context.performed) playerItemManager.CycleItem(2, WeaponSwitchTypes.Absolute);
     }
     #endregion
-    
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            playerPauseController.TogglePause();
+        }
+    }
     #region Input Enable/Disable
     private void OnEnable()
     {
