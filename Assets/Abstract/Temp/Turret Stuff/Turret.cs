@@ -5,12 +5,10 @@ using UnityEngine;
 public class Turret : MonoBehaviour, ICanBeDisabled
 {
     public GameObject player;
-    public List<Transform> turrets;
     public float lookSpeed;
-    public GameObject explosionPrefab;
     public float activationDistance;
 
-    public bool TurretActive;
+    public bool TurretActive = true;
     public Quaternion baseRot;
 
     public GameObject TurretHead;
@@ -21,7 +19,7 @@ public class Turret : MonoBehaviour, ICanBeDisabled
     void Start()
     {
         TurretHead = GameObject.Find("Top");
-        player = GameObject.FindObjectOfType<PlayerMovement>().gameObject;
+        player = GameObject.Find("Player");
         baseRot = TurretHead.transform.rotation;
     }
 
@@ -62,7 +60,7 @@ public class Turret : MonoBehaviour, ICanBeDisabled
 
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
 
-            turretTransform.rotation = Quaternion.Slerp(turretTransform.rotation, targetRotation, lookSpeed * Time.deltaTime);
+            TurretHead.transform.rotation = Quaternion.Slerp(TurretHead.transform.rotation, targetRotation, lookSpeed * Time.deltaTime);
 
             return true;
         }

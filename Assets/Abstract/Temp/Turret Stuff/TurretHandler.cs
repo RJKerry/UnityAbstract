@@ -11,11 +11,11 @@ public class TurretHandler : MonoBehaviour
     public GameObject explosionPrefab;
     public float activationDistance;
 
-    private Dictionary<Transform, bool> turretStatuses = new Dictionary<Transform, bool>();
-    private Dictionary<Transform, GameObject> explosionObjects = new Dictionary<Transform, GameObject>();
+    //private Dictionary<Transform, bool> turretStatuses = new Dictionary<Transform, bool>();
+/*    private Dictionary<Transform, GameObject> explosionObjects = new Dictionary<Transform, GameObject>();
 
-    private Dictionary<Transform, Quaternion> initialRotations = new Dictionary<Transform, Quaternion>();
-
+    private Dictionary<Transform, Quaternion> initialRotations = new Dictionary<Transform, Quaternion>();*/
+/*
 
     private void Start()
     {
@@ -29,8 +29,8 @@ public class TurretHandler : MonoBehaviour
             initialRotations[turretTop] = turretTop.rotation;
         }
     }
-
-    private void Update()
+*/
+/*    private void Update()
     {
         foreach (Turret turret in Turrets)
         {
@@ -87,8 +87,8 @@ public class TurretHandler : MonoBehaviour
             }
         }
     }
-
-    private Transform getNearestTurret()
+*/
+/*    private Transform getNearestTurret()
     {
         float closestDistance = Mathf.Infinity;
         Transform closestTurret = null;
@@ -103,8 +103,8 @@ public class TurretHandler : MonoBehaviour
         }
         return closestTurret;
     }
-
-    // Disable a turret by setting its status to false and instantiate explosion effect
+*/
+/*    // Disable a turret by setting its status to false and instantiate explosion effect
     private void DisableTurret(Transform turret)
     {
         turretStatuses[turret] = false;
@@ -117,10 +117,10 @@ public class TurretHandler : MonoBehaviour
         // Destroy the explosion effect object after the particle system has finished playing
         ParticleSystem explosionParticleSystem = explosionObject.GetComponent<ParticleSystem>();
         Destroy(explosionObject, explosionParticleSystem.main.duration);
-    }
+    }*/
 
     // Enable a turret by setting its status to true and delete explosion effect object
-    private void EnableTurret(Transform turret)
+/*    private void EnableTurret(Transform turret)
     {
         turretStatuses[turret] = true;
         Debug.Log("Enabled turret " + turret.name);
@@ -131,5 +131,5 @@ public class TurretHandler : MonoBehaviour
             Destroy(explosionObjects[turret]);
             explosionObjects.Remove(turret);
         }
-    }
+    }*/
 }
