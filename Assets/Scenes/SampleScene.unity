@@ -4266,30 +4266,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f39f7ef25b808de4fa0960fd6249a37b, type: 3}
---- !u!1 &2097871930 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4940473630527329235, guid: f39f7ef25b808de4fa0960fd6249a37b, type: 3}
-  m_PrefabInstance: {fileID: 2097871929}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2097871931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097871930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 589ae3bd91e850740a52552728a6cb82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  lookSpeed: 0
-  activationDistance: 0
-  TurretActive: 1
-  baseRot: {x: 0, y: 0, z: 0, w: 0}
-  TurretHead: {fileID: 0}
-  ExplosionEffect: {fileID: 0}
 --- !u!4 &2139750826 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3452931867044665262, guid: 32467b8dc355cd04da356b17dbac4f29, type: 3}
