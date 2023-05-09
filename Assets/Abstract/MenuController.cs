@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
 {
     string SceneToLoad = "SampleScene";
-    void Play()
+    public void Play()
     { SceneManager.LoadScene(SceneToLoad); }
-    void Exit()
+    public void Exit()
     { Application.Quit(); }
 }
