@@ -506,7 +506,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2038654583735681424, guid: 58c41012814c43f4ca592a7dd0a2e29f, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2038654583735681424, guid: 58c41012814c43f4ca592a7dd0a2e29f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4284,9 +4284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  turrets: []
   lookSpeed: 0
-  explosionPrefab: {fileID: 0}
   activationDistance: 0
   TurretActive: 1
   baseRot: {x: 0, y: 0, z: 0, w: 0}
@@ -4306,7 +4304,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 274125044785137399, guid: abbc7b96fc508324eb00e41574dd74f7, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 274125044785137399, guid: abbc7b96fc508324eb00e41574dd74f7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4367,7 +4365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5105622723628511760, guid: abc3871d09eebb146b6c55e2246b4741, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5105622723628511760, guid: abc3871d09eebb146b6c55e2246b4741, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4460,7 +4458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6655039129382500939, guid: 4ef707e33ce5f5e4ebc2945cb53ca5ee, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6655039129382500939, guid: 4ef707e33ce5f5e4ebc2945cb53ca5ee, type: 3}
       propertyPath: m_LocalPosition.x
