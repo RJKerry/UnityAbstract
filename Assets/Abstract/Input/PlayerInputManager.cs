@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
@@ -11,6 +12,8 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     public CharacterController playerCharacterController;
     public PlayerControls playerControls;
     public ItemManager playerItemManager;
+    private PauseController playerPauseController;
+    private GameObject pauseMenu;
     
     public Vector3 rawInputDirection; //Raw directional input translated to world space
 
@@ -24,6 +27,8 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     public int interactDist = 5;
     private void Awake()
     {
+        playerPauseController = GetComponent<PauseController>();
+
         mouseSpeed = mouseSpeed * 10;
         playerControls = new PlayerControls();
         playerControls.DefaultPlayer.SetCallbacks(this);
@@ -51,7 +56,6 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         {
             Vector2 input = context.ReadValue<Vector2>();
             rawInputDirection = new Vector3(input.x, 0, input.y);
-            //Vector3 projectedInput = Vector3.ProjectOnPlane(new Vector3(input.x, 0, input.y), Vector3.up);
         }
     }
     public void OnLook(InputAction.CallbackContext context)
@@ -67,10 +71,12 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
             cameraObject.transform.localEulerAngles = new Vector3(xRot, 0, 0);
         }
     }
+
     public void OnInteract(InputAction.CallbackContext context)
     {
         Debug.Log("Interact key pressed");
     }
+
     public void OnUseItem(InputAction.CallbackContext context)
     {
         if(context.performed) playerItemManager?.UseItem();
@@ -95,7 +101,13 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         if(context.performed) playerItemManager.CycleItem(2, WeaponSwitchTypes.Absolute);
     }
     #endregion
-    
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            playerPauseController.TogglePause();
+        }
+    }
     #region Input Enable/Disable
     private void OnEnable()
     {
