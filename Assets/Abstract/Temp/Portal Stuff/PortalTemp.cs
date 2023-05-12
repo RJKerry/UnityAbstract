@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class PortalTemp : MonoBehaviour
 {
     public Camera PortalCam;
     public Camera PlayerCam;
@@ -16,7 +16,7 @@ public class Portal : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-
+    
             RaycastHit hit;
             if (Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out hit))
             {

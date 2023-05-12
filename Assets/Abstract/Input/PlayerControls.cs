@@ -98,6 +98,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""4dba89f9-11ca-4f52-b3e6-3e334b10f788"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -342,6 +351,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Select Slot 3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eee9618e-8b3e-430a-a33f-d3f33a2cb375"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3ce6026-7ac6-4d3f-a73a-51a7b6d5adaf"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -358,6 +389,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_DefaultPlayer_SelectSlot1 = m_DefaultPlayer.FindAction("Select Slot 1", throwIfNotFound: true);
         m_DefaultPlayer_SelectSlot2 = m_DefaultPlayer.FindAction("Select Slot 2", throwIfNotFound: true);
         m_DefaultPlayer_SelectSlot3 = m_DefaultPlayer.FindAction("Select Slot 3", throwIfNotFound: true);
+        m_DefaultPlayer_Pause = m_DefaultPlayer.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -425,6 +457,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultPlayer_SelectSlot1;
     private readonly InputAction m_DefaultPlayer_SelectSlot2;
     private readonly InputAction m_DefaultPlayer_SelectSlot3;
+    private readonly InputAction m_DefaultPlayer_Pause;
     public struct DefaultPlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -437,6 +470,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @SelectSlot1 => m_Wrapper.m_DefaultPlayer_SelectSlot1;
         public InputAction @SelectSlot2 => m_Wrapper.m_DefaultPlayer_SelectSlot2;
         public InputAction @SelectSlot3 => m_Wrapper.m_DefaultPlayer_SelectSlot3;
+        public InputAction @Pause => m_Wrapper.m_DefaultPlayer_Pause;
         public InputActionMap Get() { return m_Wrapper.m_DefaultPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -470,6 +504,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @SelectSlot3.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnSelectSlot3;
                 @SelectSlot3.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnSelectSlot3;
                 @SelectSlot3.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnSelectSlot3;
+                @Pause.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_DefaultPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -498,6 +535,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @SelectSlot3.started += instance.OnSelectSlot3;
                 @SelectSlot3.performed += instance.OnSelectSlot3;
                 @SelectSlot3.canceled += instance.OnSelectSlot3;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -512,5 +552,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSelectSlot1(InputAction.CallbackContext context);
         void OnSelectSlot2(InputAction.CallbackContext context);
         void OnSelectSlot3(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
