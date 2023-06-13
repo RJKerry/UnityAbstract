@@ -29,12 +29,11 @@ public class ItemManager : MonoBehaviour
     void Init()
     {
         ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY
-        itemSocket = transform.GetChild(0).gameObject.transform.GetChild(0).gameObject; //TEMPORARY
+        itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
         item = ownedItems[0];
         CycleItem(0, WeaponSwitchTypes.Absolute);
     }
     
-    ///THIS HAS NOT HAD INPUT SET UP IN THE INPUT MANAGER - 25/04/2023
     /// <summary>
     /// Cycles between items through steps or absolute values
     /// </summary>

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class WallOpacityController : MonoBehaviour
 {
+    public float opacity = 0.5f;
     public float duration = 10f;
     public KeyCode key = KeyCode.Z;
 
@@ -25,6 +26,7 @@ public class WallOpacityController : MonoBehaviour
                     transparentMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
                     transparentMaterial.SetInt("_ZWrite", 0);
                     Color color = originalMaterial.color;
+                    color.a = opacity;
                     transparentMaterial.color = color;
 
                     renderer.material = transparentMaterial;
