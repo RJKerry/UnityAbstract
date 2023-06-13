@@ -41,6 +41,7 @@ public class ItemManager : MonoBehaviour
     /// <param name="switchType">The kind of change you want to apply</param>
     public void CycleItem(int step, WeaponSwitchTypes switchType)
     {
+        Debug.Log(step);
         int prevIndex = itemIndex;
         switch (switchType)
         {
