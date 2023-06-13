@@ -16,7 +16,8 @@ public class CameraSwitcher : MonoBehaviour
     {
         foreach (CinemachineVirtualCamera cam in Cameras)
         {
-            cam.Priority = inactivePriority;
+            if (cam != camera)
+                cam.Priority = inactivePriority;
         }
         camera.Priority = activePriority;
     }

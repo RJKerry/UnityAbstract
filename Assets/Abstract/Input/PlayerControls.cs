@@ -46,6 +46,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""StickLook"",
+                    ""type"": ""Value"",
+                    ""id"": ""5922400f-cf25-444a-8d61-36e727c0e1e7"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""626e0f56-ec2d-4a79-b2f3-10383d993f8b"",
@@ -189,17 +198,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5be27bfb-0ec2-4787-be6f-9b6587d043cd"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""13e5aa0d-f0fa-46a0-90d2-a89318c49d22"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -280,7 +278,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""6cc3d606-e59e-4719-aeb6-e8b09d76abc3"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Normalize(min=-1,max=1)"",
                     ""groups"": """",
                     ""action"": ""CycleItem"",
                     ""isComposite"": false,
@@ -373,6 +371,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e85ce823-73c7-4619-aa80-78c453673c1a"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone"",
+                    ""groups"": """",
+                    ""action"": ""StickLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -383,6 +392,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_DefaultPlayer = asset.FindActionMap("DefaultPlayer", throwIfNotFound: true);
         m_DefaultPlayer_Walk = m_DefaultPlayer.FindAction("Walk", throwIfNotFound: true);
         m_DefaultPlayer_Look = m_DefaultPlayer.FindAction("Look", throwIfNotFound: true);
+        m_DefaultPlayer_StickLook = m_DefaultPlayer.FindAction("StickLook", throwIfNotFound: true);
         m_DefaultPlayer_Interact = m_DefaultPlayer.FindAction("Interact", throwIfNotFound: true);
         m_DefaultPlayer_UseItem = m_DefaultPlayer.FindAction("UseItem", throwIfNotFound: true);
         m_DefaultPlayer_CycleItem = m_DefaultPlayer.FindAction("CycleItem", throwIfNotFound: true);
@@ -451,6 +461,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IDefaultPlayerActions m_DefaultPlayerActionsCallbackInterface;
     private readonly InputAction m_DefaultPlayer_Walk;
     private readonly InputAction m_DefaultPlayer_Look;
+    private readonly InputAction m_DefaultPlayer_StickLook;
     private readonly InputAction m_DefaultPlayer_Interact;
     private readonly InputAction m_DefaultPlayer_UseItem;
     private readonly InputAction m_DefaultPlayer_CycleItem;
@@ -464,6 +475,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public DefaultPlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_DefaultPlayer_Walk;
         public InputAction @Look => m_Wrapper.m_DefaultPlayer_Look;
+        public InputAction @StickLook => m_Wrapper.m_DefaultPlayer_StickLook;
         public InputAction @Interact => m_Wrapper.m_DefaultPlayer_Interact;
         public InputAction @UseItem => m_Wrapper.m_DefaultPlayer_UseItem;
         public InputAction @CycleItem => m_Wrapper.m_DefaultPlayer_CycleItem;
@@ -486,6 +498,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnLook;
+                @StickLook.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnStickLook;
+                @StickLook.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnStickLook;
+                @StickLook.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnStickLook;
                 @Interact.started -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_DefaultPlayerActionsCallbackInterface.OnInteract;
@@ -517,6 +532,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @StickLook.started += instance.OnStickLook;
+                @StickLook.performed += instance.OnStickLook;
+                @StickLook.canceled += instance.OnStickLook;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -546,6 +564,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnStickLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
         void OnCycleItem(InputAction.CallbackContext context);
