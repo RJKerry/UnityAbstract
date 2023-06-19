@@ -12,7 +12,7 @@ public class PauseController : MonoBehaviour
     string menuSceneName = "MainMenu";
     Canvas canvas;
     GameObject pauseMenu;
-    Button resumeButton, quitButton;
+    //Button resumeButton, quitButton;
 
     private void Awake()
     {

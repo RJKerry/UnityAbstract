@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
-    string SceneToLoad = "SampleScene";
+    string SceneToLoad = "Turret Test";
     public void Play()
     { SceneManager.LoadScene(SceneToLoad); }
     public void Exit()
