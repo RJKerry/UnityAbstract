@@ -60,3 +60,6 @@ crashlytics-build.properties
 
 Packages/packages-lock.json
 *.dwlt
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
+ProjectSettings/GraphicsSettings.asset
+UserSettings/EditorUserSettings.asset
