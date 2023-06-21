@@ -16,3 +16,8 @@ public interface ICanBeDisabled
 {
     void OnDisableInteract();
 }
+
+public interface ICanBeGrabbed
+{
+    void OnGrabbed(Vector3 hitPoint);
+}
