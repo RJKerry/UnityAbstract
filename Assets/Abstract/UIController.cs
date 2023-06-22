@@ -15,13 +15,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        changeLives(3);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        changeLives(4);
     }
 
     public void changeLives(int x)
@@ -44,6 +38,11 @@ public class UIController : MonoBehaviour
                 lives.sprite = fourLives;
                 break;
         }
+    }
+
+    public void UpdateItemSlot()
+    { 
+        
     }
 
 }
