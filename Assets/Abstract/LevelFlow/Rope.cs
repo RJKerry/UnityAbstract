@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabbableObject : MonoBehaviour, ICanBeGrabbed
+public class Rope : MonoBehaviour, ICanBeGrabbed
 {
     public Transform playerTransform;
     public int ropeSegmentCount = 10;

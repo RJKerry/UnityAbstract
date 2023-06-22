@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class GrabObject : ItemData
 {
-
     public override void ItemUsed()
     {
         RaycastHit hit;
