@@ -362,6 +362,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "TerminalInput",
+            "id": "9f57fb1d-06bf-42ea-b44c-591e36f59940",
+            "actions": [
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "515e7de4-f680-491f-86de-ff8b3f2d4175",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "267df40d-728f-4ca5-9738-a99b3e7668fc",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "861f9c82-34c4-4b92-8876-82fdeb0c8b4a",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

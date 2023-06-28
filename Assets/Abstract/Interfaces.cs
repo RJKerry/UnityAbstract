@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void OnInteract();
+    void OnInteract(PlayerInputManager messageSource);
 }
 
 public interface IDamageable
@@ -21,10 +21,4 @@ public interface ICanBeDisabled
 public interface ICanBeGrabbed
 {
     void OnGrabbed(Vector3 hitPoint);
-}
-
-public interface ICameraFocalPoint
-{
-    void OnFocus(CinemachineVirtualCamera oldCamera);
-    void ReturnTargetReference(GameObject viewTarget); 
 }

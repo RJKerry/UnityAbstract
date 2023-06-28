@@ -384,6 +384,45 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""TerminalInput"",
+            ""id"": ""9f57fb1d-06bf-42ea-b44c-591e36f59940"",
+            ""actions"": [
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""515e7de4-f680-491f-86de-ff8b3f2d4175"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""267df40d-728f-4ca5-9738-a99b3e7668fc"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""861f9c82-34c4-4b92-8876-82fdeb0c8b4a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -400,6 +439,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_DefaultPlayer_SelectSlot2 = m_DefaultPlayer.FindAction("Select Slot 2", throwIfNotFound: true);
         m_DefaultPlayer_SelectSlot3 = m_DefaultPlayer.FindAction("Select Slot 3", throwIfNotFound: true);
         m_DefaultPlayer_Pause = m_DefaultPlayer.FindAction("Pause", throwIfNotFound: true);
+        // TerminalInput
+        m_TerminalInput = asset.FindActionMap("TerminalInput", throwIfNotFound: true);
+        m_TerminalInput_Exit = m_TerminalInput.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -575,6 +617,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public DefaultPlayerActions @DefaultPlayer => new DefaultPlayerActions(this);
+
+    // TerminalInput
+    private readonly InputActionMap m_TerminalInput;
+    private List<ITerminalInputActions> m_TerminalInputActionsCallbackInterfaces = new List<ITerminalInputActions>();
+    private readonly InputAction m_TerminalInput_Exit;
+    public struct TerminalInputActions
+    {
+        private @PlayerControls m_Wrapper;
+        public TerminalInputActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Exit => m_Wrapper.m_TerminalInput_Exit;
+        public InputActionMap Get() { return m_Wrapper.m_TerminalInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TerminalInputActions set) { return set.Get(); }
+        public void AddCallbacks(ITerminalInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TerminalInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TerminalInputActionsCallbackInterfaces.Add(instance);
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
+        }
+
+        private void UnregisterCallbacks(ITerminalInputActions instance)
+        {
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
+        }
+
+        public void RemoveCallbacks(ITerminalInputActions instance)
+        {
+            if (m_Wrapper.m_TerminalInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITerminalInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TerminalInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TerminalInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TerminalInputActions @TerminalInput => new TerminalInputActions(this);
     public interface IDefaultPlayerActions
     {
         void OnWalk(InputAction.CallbackContext context);
@@ -587,5 +675,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSelectSlot2(InputAction.CallbackContext context);
         void OnSelectSlot3(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface ITerminalInputActions
+    {
+        void OnExit(InputAction.CallbackContext context);
     }
 }

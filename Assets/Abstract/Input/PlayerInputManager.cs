@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
+//Movement functionalities
 public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerActions
 {
     public GameObject cameraObject; //the gameobject the cinemachine brain is attached to
@@ -27,6 +28,8 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
 
     public int interactDist = 5;
 
+    public bool canRecieveInput = true;
+
     private void Awake()
     {
         Init();
@@ -35,9 +38,9 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     private void Update()
     {
         ApplyMovement();
-
+        
         if (lastViableControllerInput.x != 0 || lastViableControllerInput.y != 0) // do not move if no direction, deadzone is handled within the input manager
-            ApplyLook(lastViableControllerInput);
+                ApplyLook(lastViableControllerInput);
     }
 
     /// <summary>
@@ -62,12 +65,15 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     /// </summary>
     private void ApplyMovement()
     {
-        Vector3 relativeMovement = transform.forward * rawMovementInput.z + transform.right * rawMovementInput.x;
+        if (canRecieveInput)
+        {
+            Vector3 relativeMovement = transform.forward * rawMovementInput.z + transform.right * rawMovementInput.x;
 
-        playerCharacterController.Move( movementSpeed * Time.deltaTime * relativeMovement);
+            playerCharacterController.Move(movementSpeed * Time.deltaTime * relativeMovement);
 
-        if (!playerCharacterController.isGrounded)
-            playerCharacterController.Move(Physics.gravity * Time.deltaTime);
+            if (!playerCharacterController.isGrounded)
+                playerCharacterController.Move(Physics.gravity * Time.deltaTime);
+        }
     }
 
     /// <summary>
@@ -76,12 +82,15 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     /// <param name="LookDirection"></param>
     private void ApplyLook(Vector2 LookDirection) 
     {
-        xRot -= LookDirection.y;
-        xRot = Mathf.Clamp(xRot, -90f, 90f);
-        yRot += LookDirection.x;
+        if (canRecieveInput)
+        {
+            xRot -= LookDirection.y;
+            xRot = Mathf.Clamp(xRot, -90f, 90f);
+            yRot += LookDirection.x;
 
-        transform.eulerAngles = new Vector3(0, yRot, 0);
-        cameraObject.transform.localEulerAngles = new Vector3(xRot, 0, 0);
+            transform.eulerAngles = new Vector3(0, yRot, 0);
+            cameraObject.transform.localEulerAngles = new Vector3(xRot, 0, 0);
+        }
     }
 
     /// <summary>
@@ -109,6 +118,7 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         if (context.performed)
         {
             Vector2 mouseDelta = context.ReadValue<Vector2>() * mouseSpeed * Time.deltaTime;
+
             ApplyLook(mouseDelta);
         }
     }
@@ -138,7 +148,11 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
-        Debug.Log("Interact key pressed");
+        RaycastHit hitObject;
+        if (Physics.Raycast(cameraObject.transform.position, cameraObject.transform.forward, out hitObject))
+        {
+            hitObject.transform.GetComponent<IInteractable>()?.OnInteract(this); //Condensed interface check
+        }
     }
 
     public void OnUseItem(InputAction.CallbackContext context)
@@ -171,11 +185,19 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     }
     #endregion
 
+
+    public void TeleportTo(Vector3 newPosition)
+    { 
+        gameObject.transform.position = newPosition;
+    }
+
+
     public void OnPause(InputAction.CallbackContext context)
     {
         if (context.performed)
             playerPauseController.TogglePause();
     }
+
     #region Input Enable/Disable
     private void OnEnable()
     {

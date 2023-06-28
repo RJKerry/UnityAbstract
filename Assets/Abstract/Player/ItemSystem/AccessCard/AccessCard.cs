@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/ItemBase/GrabObject")]
+[CreateAssetMenu(menuName = "ScriptableObjects/ItemBase/AccessCard")]
 
 public class GrabObject : ItemData
 {
+    //This is where things that happen in the game world go
     public override void ItemUsed()
     {
+
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
         {
@@ -17,5 +19,6 @@ public class GrabObject : ItemData
                 grabbable.OnGrabbed(hit.point);
             }
         }
+
     }
 }

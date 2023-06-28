@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TEST_GrabbableBoxPuzzle : MonoBehaviour, ICanBeGrabbed
+public class TEST_Door : MonoBehaviour, ICanBeGrabbed
 {
     public Vector3 StartPos, EndPos;
     public bool triggered;
@@ -20,6 +20,10 @@ public class TEST_GrabbableBoxPuzzle : MonoBehaviour, ICanBeGrabbed
         triggered = true;
     }
 
+
+    /// <summary>
+    /// Update driven lerp is not a good thing
+    /// </summary>
     void Update()
     {
         if (triggered)
