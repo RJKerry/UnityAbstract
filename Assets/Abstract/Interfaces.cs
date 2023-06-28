@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,4 +21,10 @@ public interface ICanBeDisabled
 public interface ICanBeGrabbed
 {
     void OnGrabbed(Vector3 hitPoint);
+}
+
+public interface ICameraFocalPoint
+{
+    void OnFocus(CinemachineVirtualCamera oldCamera);
+    void ReturnTargetReference(GameObject viewTarget); 
 }
