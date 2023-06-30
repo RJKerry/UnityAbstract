@@ -22,3 +22,8 @@ public interface ICanBeGrabbed
 {
     void OnGrabbed(Vector3 hitPoint);
 }
+
+public interface ITerminalTriggerable
+{
+    void OnTriggered();
+}

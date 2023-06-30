@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TEST_Door : MonoBehaviour, ICanBeGrabbed
+public class Door : MonoBehaviour, ITerminalTriggerable
 {
     public Vector3 StartPos, EndPos;
     public bool triggered;
@@ -15,14 +15,13 @@ public class TEST_Door : MonoBehaviour, ICanBeGrabbed
         EndPos = transform.position+Vector3.up*5;
     }
 
-    public void OnGrabbed(Vector3 hitPoint)
+    public void OnTriggered()
     {
         triggered = true;
     }
 
-
     /// <summary>
-    /// Update driven lerp is not a good thing
+    /// Update driven lerp is not a good thing, but this is for testing 
     /// </summary>
     void Update()
     {

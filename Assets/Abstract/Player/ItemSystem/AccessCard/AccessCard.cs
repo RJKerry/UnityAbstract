@@ -4,21 +4,11 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/ItemBase/AccessCard")]
 
-public class GrabObject : ItemData
+public class AccessCard : ItemData
 {
     //This is where things that happen in the game world go
     public override void ItemUsed()
     {
-
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
-        {
-            ICanBeGrabbed grabbable = hit.collider.GetComponent<ICanBeGrabbed>();
-            if (grabbable != null)
-            {
-                grabbable.OnGrabbed(hit.point);
-            }
-        }
-
+        Debug.Log("Imagine some swiping happening right here");
     }
 }

@@ -12,6 +12,8 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
     public PlayerInputManager interactingPlayer;
 
+    public Door obj;
+
     private void Awake()
     {
         terminalControls = new PlayerControls();
@@ -19,6 +21,11 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
         standPosition = transform.GetChild(1).transform.gameObject;
         terminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
+    }
+
+    public virtual void GatherTerminalTriggers()
+    {
+        obj.OnTriggered();
     }
 
     public void OnInteract(PlayerInputManager messageSource)

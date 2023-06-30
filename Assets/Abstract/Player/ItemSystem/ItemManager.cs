@@ -8,14 +8,18 @@ using UnityEngine.Serialization;
 public class ItemManager : MonoBehaviour
 {
     //reference to however we are communicating this data if we need one
-    public ItemData item;
+    public ItemData equippedItem;
     public int itemIndex = 0;
     public List<ItemData> ownedItems; //This can be a dictionary at some point potentially
+    private int maxItems = 3;
+
     public GameObject itemSocket;
     
+    public ItemSlotManager slotManager;
+
     public void UseItem()
     {
-        item?.ItemUsed();
+        equippedItem?.ItemUsed();
     }
 
     private void Awake()
@@ -30,7 +34,8 @@ public class ItemManager : MonoBehaviour
     {
         ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY
         itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
-        item = ownedItems[0];
+        slotManager = FindObjectOfType<ItemSlotManager>();
+        equippedItem = ownedItems[0];
         CycleItem(0, WeaponSwitchTypes.Absolute);
     }
     
@@ -69,9 +74,22 @@ public class ItemManager : MonoBehaviour
 
     public void UpdateItemData()
     {
-        item = ownedItems[itemIndex];
+        equippedItem = ownedItems[itemIndex];
+        slotManager.ActiveUISlots[itemIndex].OnSelected();
         //Trigger item swap animation, or send a message to a respective animation manager (second would be nicer)
+
     }
+
+    public bool AddItem(ItemData newItem)
+    {
+        if (ownedItems.Count < maxItems)
+        {
+            ownedItems.Add(newItem);
+            return true;
+        }
+        return false;
+    }
+
 }
 
 public enum WeaponSwitchTypes

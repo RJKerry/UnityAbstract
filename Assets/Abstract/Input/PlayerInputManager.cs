@@ -65,15 +65,12 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     /// </summary>
     private void ApplyMovement()
     {
-        if (canRecieveInput)
-        {
-            Vector3 relativeMovement = transform.forward * rawMovementInput.z + transform.right * rawMovementInput.x;
+        Vector3 relativeMovement = transform.forward * rawMovementInput.z + transform.right * rawMovementInput.x;
 
-            playerCharacterController.Move(movementSpeed * Time.deltaTime * relativeMovement);
+        playerCharacterController.Move(movementSpeed * Time.deltaTime * relativeMovement);
 
-            if (!playerCharacterController.isGrounded)
-                playerCharacterController.Move(Physics.gravity * Time.deltaTime);
-        }
+        if (!playerCharacterController.isGrounded)
+            playerCharacterController.Move(Physics.gravity * Time.deltaTime);
     }
 
     /// <summary>

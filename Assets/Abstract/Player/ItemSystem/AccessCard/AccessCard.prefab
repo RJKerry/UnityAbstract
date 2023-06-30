@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4152581513681305459}
   - component: {fileID: 819956923515793847}
   - component: {fileID: 8876260630172958834}
+  - component: {fileID: -4657487833033581197}
   m_Layer: 0
   m_Name: AccessCard
   m_TagString: Untagged
@@ -344,3 +345,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &-4657487833033581197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137217714669111500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562093c7ec8ad9c449c63f7ae67c2083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 44d18b1c9678b894ab04962f229a888c, type: 2}
