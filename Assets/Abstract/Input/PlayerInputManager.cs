@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -37,7 +38,10 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
 
     private void Update()
     {
-        ApplyMovement();
+        if (canRecieveInput)
+        {
+            ApplyMovement();
+        }
         
         if (lastViableControllerInput.x != 0 || lastViableControllerInput.y != 0) // do not move if no direction, deadzone is handled within the input manager
                 ApplyLook(lastViableControllerInput);
@@ -54,8 +58,8 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         playerCharacterController = GetComponent<CharacterController>();
         playerPauseController = GetComponent<PauseController>();
         playerItemManager = GetComponent<ItemManager>();
-
         cameraObject = GetComponentInChildren<CinemachineVirtualCamera>().gameObject;
+
     }
 
     /// <summary>
@@ -105,6 +109,7 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         }
     }
 
+
     /// <summary>
     /// Reads the mouse delta input and calls the
     /// ApplyLook method using it as a parameter
@@ -145,10 +150,13 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
-        RaycastHit hitObject;
-        if (Physics.Raycast(cameraObject.transform.position, cameraObject.transform.forward, out hitObject))
+        if(canRecieveInput && context.performed)
         {
-            hitObject.transform.GetComponent<IInteractable>()?.OnInteract(this); //Condensed interface check
+            RaycastHit hitObject;
+            if (Physics.Raycast(cameraObject.transform.position, cameraObject.transform.forward, out hitObject))
+            {
+                hitObject.transform.GetComponent<IInteractable>()?.OnInteract(this); //Condensed interface check
+            }
         }
     }
 

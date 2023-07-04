@@ -61,3 +61,8 @@ crashlytics-build.properties
 Packages/packages-lock.json
 *.dwlt
 UserSettings/EditorUserSettings.asset
+*.meta
+*.json
+*.json
+*.json
+Packages/manifest.json

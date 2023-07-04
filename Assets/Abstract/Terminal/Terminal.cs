@@ -9,7 +9,6 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public GameObject standPosition;
 
     public PlayerControls terminalControls;
-
     public PlayerInputManager interactingPlayer;
 
     public Door obj;
@@ -30,34 +29,47 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
     public void OnInteract(PlayerInputManager messageSource)
     {
-        interactingPlayer = messageSource;
-        terminalCam.Priority = 50; //TEST USE CAMERA SWITCHER LATER
-        messageSource.canRecieveInput = false;
+        messageSource.playerControls.Disable();
+        terminalControls.TerminalInput.Enable();
+        setPriority(50);
         messageSource.TeleportTo(standPosition.transform.position);
+        messageSource.canRecieveInput = false;
+        Debug.Log(gameObject.name);
+        interactingPlayer = messageSource;
+    }
+
+    public void setPriority(int priority)
+    {
+        terminalCam.Priority = priority;
     }
 
     public void EndInteract()
     {
+        setPriority(0);
         interactingPlayer.canRecieveInput = true;
-        terminalCam.Priority = 0;
         interactingPlayer = null;
+
     }
 
     public void OnExit(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if(context.performed && interactingPlayer != null)
+        if(context.performed && interactingPlayer != null) {
+            Debug.Log(gameObject.name);
+            interactingPlayer.playerControls.Enable();
+            terminalControls.TerminalInput.Disable();
             EndInteract();
+        }
     }
 
     #region Input Enable/Disable
     private void OnEnable()
     {
-        terminalControls.Enable();
+        terminalControls.Disable();
     }
 
     private void OnDisable()
     {
-        terminalControls.Disable();
+        OnEnable();
     }
     #endregion
 }
