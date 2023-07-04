@@ -42,8 +42,23 @@ public class OverseerViewTargeter : MonoBehaviour
     void InitNewTarget()
     { 
         eTime = 0;
-        currentTarget = POIs[Random.Range(0, POIs.Count)]; //select a random view target
+        currentTarget = SelectNewTarget(currentTarget);
         moving = true;
+    }
+
+    /// <summary>
+    /// SelectNewTarget will randomly generate an index from targets,
+    /// if it is identical to the previous target, it will call again until a different
+    /// one is selected
+    /// </summary>
+    /// <param name="oldTarget">The previous view target</param>
+    /// <returns></returns>
+    public GameObject SelectNewTarget(GameObject oldTarget)
+    {
+        GameObject newTarget = POIs[Random.Range(0, POIs.Count)];
+        if (newTarget == oldTarget)
+            return SelectNewTarget(oldTarget);
+        return newTarget;
     }
 
     /// <summary>
