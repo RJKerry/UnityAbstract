@@ -13,6 +13,11 @@ public class OverseerViewTargeter : MonoBehaviour
 
     public bool moving = false;
 
+    private void Awake()
+    {
+        InitNewTarget();
+    }
+
     private void Update()
     {
         if (moving) { //while updating if moving
@@ -28,13 +33,6 @@ public class OverseerViewTargeter : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// A method call to start the behaviours
-    /// </summary>
-    public void Activate()
-    {
-        InitNewTarget();
-    }
 
     /// <summary>
     /// Resets the lerp to be ready for a new transition
