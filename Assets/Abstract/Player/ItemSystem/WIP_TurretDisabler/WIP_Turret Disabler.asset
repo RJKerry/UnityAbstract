@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f72d3b16d5f4944a1ebebe8d070219, type: 3}
   m_Name: WIP_Turret Disabler
   m_EditorClassIdentifier: 
-  Name: Name
-  itemIcon: {fileID: 0}
-  itemObject: {fileID: 0}
+  Name: Turret Disaber
+  itemIcon: {fileID: 21300000, guid: 9b55e9f6d0cac764d8fae0b8ac51b82f, type: 3}
+  itemObject: {fileID: 522160269048764254, guid: ee942916263628b42a1cd0370980beb8, type: 3}
