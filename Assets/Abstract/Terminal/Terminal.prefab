@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4450986464559043046}
-  m_LocalRotation: {x: 0.09229579, y: -0.70105743, z: 0.09229579, w: 0.70105743}
+  m_LocalRotation: {x: 0.08431169, y: -0.70206237, z: 0.08431167, w: 0.70206237}
   m_LocalPosition: {x: 1, y: 1.25, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 6920590394704710538}
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 45
@@ -95,7 +95,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6920590394704710537}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1.25, z: 0.5}
+  m_LocalPosition: {x: -0.19, y: 0.96, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 6920590395831069267}
   - component: {fileID: 6920590395831069266}
   - component: {fileID: 6920590395831069265}
+  - component: {fileID: 3978054084456317557}
   m_Layer: 0
   m_Name: Terminal
   m_TagString: Untagged
@@ -809,6 +810,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &3978054084456317557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6920590395831069264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e08eede34d9f84a859e7411afb0113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terminalCam: {fileID: 0}
+  standPosition: {fileID: 0}
+  interactingPlayer: {fileID: 0}
+  obj: {fileID: 0}
 --- !u!1 &6920590396016426304
 GameObject:
   m_ObjectHideFlags: 0
