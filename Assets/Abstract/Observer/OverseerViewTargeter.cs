@@ -9,7 +9,10 @@ public class OverseerViewTargeter : MonoBehaviour
 
     public GameObject currentTarget;
 
-    public float eTime, tTime = 1f;
+    private float eTime;
+
+    [Tooltip("The total time to view a certain area for (Generic)")]
+    public float tTime = 1f;
 
     public bool moving = false;
 
