@@ -1,17 +1,20 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalInputActions
 {
+
     public CinemachineVirtualCamera terminalCam;
     public GameObject standPosition;
 
     public PlayerControls terminalControls;
     public PlayerInputManager interactingPlayer;
 
-    public Door obj;
+    public int IDGroup = 0;
+    List<ITerminalListener> ActiveListeners;
 
     private void Awake()
     {
@@ -22,9 +25,16 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         terminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
     }
 
-    public virtual void GatherTerminalTriggers()
+    public virtual void GatherTerminalListeners()
     {
-        obj.OnTriggered();
+        var listeners = FindObjectsOfType<MonoBehaviour>().OfType<ITerminalListener>();
+        foreach (var listener in listeners) 
+        {
+            if (listener.GetID() == IDGroup)
+            {
+                ActiveListeners.Add(listener);
+            }
+        }
     }
 
     public void OnInteract(PlayerInputManager messageSource)

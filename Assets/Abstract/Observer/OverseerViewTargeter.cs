@@ -60,7 +60,7 @@ public class OverseerViewTargeter : MonoBehaviour
         if(POIs.Count < 1)
             return oldTargetIndex;
 
-        return oldTargetIndex + 1 > POIs.Count ? 0 : oldTargetIndex + 1; //next element, or the first element
+        return (oldTargetIndex + 1) > POIs.Count-1 ? 0 : oldTargetIndex + 1; //next element, or the first element
     }
 
     /// <summary>

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour, ITerminalTriggerable
+public class Door : MonoBehaviour, ITerminalListener
 {
     public Vector3 StartPos, EndPos;
     public bool triggered;
@@ -33,5 +33,10 @@ public class Door : MonoBehaviour, ITerminalTriggerable
                 eTime += Time.deltaTime;
             }
         }
+    }
+
+    public void OnActivated()
+    {
+        OnTriggered();
     }
 }

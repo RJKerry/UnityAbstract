@@ -23,7 +23,8 @@ public interface ICanBeGrabbed
     void OnGrabbed(Vector3 hitPoint);
 }
 
-public interface ITerminalTriggerable
+public interface ITerminalListener
 {
-    void OnTriggered();
+    void OnActivated();
+    int GetID();
 }
