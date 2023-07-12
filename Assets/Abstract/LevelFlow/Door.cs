@@ -9,6 +9,8 @@ public class Door : MonoBehaviour, ITerminalListener
 
     float eTime, tTime = 1; //elapsed time, target time
 
+    int sortingID = 0;
+
     private void Awake()
     {
         StartPos = transform.position;
@@ -38,5 +40,10 @@ public class Door : MonoBehaviour, ITerminalListener
     public void OnActivated()
     {
         OnTriggered();
+    }
+
+    public int GetID()
+    {
+        return sortingID;
     }
 }
