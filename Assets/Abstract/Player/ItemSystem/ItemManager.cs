@@ -46,6 +46,7 @@ public class ItemManager : MonoBehaviour
     /// <param name="switchType">The kind of change you want to apply</param>
     public void CycleItem(int step, WeaponSwitchTypes switchType)
     {
+        Debug.Log(step);
         int prevIndex = itemIndex;
         switch (switchType)
         {
@@ -75,9 +76,8 @@ public class ItemManager : MonoBehaviour
     public void UpdateItemData()
     {
         equippedItem = ownedItems[itemIndex];
-        slotManager.ActiveUISlots[itemIndex].OnSelected();
+        //slotManager.ActiveUISlots[itemIndex].OnSelected();
         //Trigger item swap animation, or send a message to a respective animation manager (second would be nicer)
-
     }
 
     public bool AddItem(ItemData newItem)

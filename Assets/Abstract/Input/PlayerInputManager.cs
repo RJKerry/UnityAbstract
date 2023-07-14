@@ -172,7 +172,7 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     /// <param name="context">A floating point value between -1 and 1</param>
     public void OnCycleItem(InputAction.CallbackContext context)
     {
-        if(context.performed) playerItemManager.CycleItem((int)context.ReadValue<float>(), WeaponSwitchTypes.Cycle);
+        if(context.performed) playerItemManager?.CycleItem((int)context.ReadValue<float>(), WeaponSwitchTypes.Cycle);
     }
 
     #region ItemKeys
