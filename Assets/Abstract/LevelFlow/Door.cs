@@ -7,7 +7,10 @@ public class Door : MonoBehaviour, ITerminalListener
     public Vector3 StartPos, EndPos;
     public bool triggered;
 
+    public bool Unlocked;
+
     float eTime, tTime = 1; //elapsed time, target time
+    public Light LockedLight, UnlockedLight;
 
     
     public int GroupingID; //Nescesarry for anything implementing ITerminalListener - Trigger ID Group
@@ -23,10 +26,6 @@ public class Door : MonoBehaviour, ITerminalListener
         EndPos = transform.position+Vector3.up*5;
     }
 
-    public void OnTriggered()
-    {
-        triggered = true;
-    }
 
     /// <summary>
     /// Update driven lerp is not a good thing, but this is for testing 
@@ -45,6 +44,9 @@ public class Door : MonoBehaviour, ITerminalListener
 
     public void OnActivated()
     {
-        OnTriggered();
+        Debug.Log("I am a door");
+        Unlocked = true;
+        LockedLight.gameObject.SetActive(false);
+        UnlockedLight.gameObject.SetActive(true);
     }
 }

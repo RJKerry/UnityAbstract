@@ -17,7 +17,7 @@ public class PauseController : MonoBehaviour
     private void Awake()
     {
         canvas = FindObjectOfType<Canvas>();
-        Debug.Log(canvas);
+        //Debug.Log(canvas);
         pauseMenu = Instantiate(Resources.Load<GameObject>("MenuAssets/PauseMenu"));
         pauseMenu.transform.SetParent(canvas.transform, false);
         pauseMenu.SetActive(false);
@@ -40,7 +40,7 @@ public class PauseController : MonoBehaviour
         /*resumeButton.clicked += TogglePause;
         quitButton.clicked += Quit;*/
 
-        Debug.Log(pauseMenu);
+        //Debug.Log(pauseMenu);
     }
 
     public void TogglePause()

@@ -23,6 +23,9 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
         standPosition = transform.GetChild(1).transform.gameObject;
         terminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
+
+        ActiveListeners = new List<ITerminalListener>();
+        GatherTerminalListeners();
     }
 
     public virtual void GatherTerminalListeners()
@@ -32,6 +35,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         {
             if (listener.IDGroup == IDGroup)
             {
+                Debug.Log(listener);
                 ActiveListeners.Add(listener);
             }
         }
@@ -46,6 +50,12 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         messageSource.canRecieveInput = false;
         Debug.Log(gameObject.name);
         interactingPlayer = messageSource;
+
+        //TEMPORARY
+        foreach (var listener in ActiveListeners)
+        {
+            listener.OnActivated();
+        }
     }
 
     public void setPriority(int priority)
