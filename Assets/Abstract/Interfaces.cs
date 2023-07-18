@@ -25,6 +25,6 @@ public interface ICanBeGrabbed
 
 public interface ITerminalListener
 {
+    int IDGroup { get; set; } //Interface has field IDGroup, implementing classes can have ID field this hooks into
     void OnActivated();
-    int GetID();
 }

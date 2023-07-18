@@ -9,7 +9,13 @@ public class Door : MonoBehaviour, ITerminalListener
 
     float eTime, tTime = 1; //elapsed time, target time
 
-    int sortingID = 0;
+    
+    public int GroupingID; //Nescesarry for anything implementing ITerminalListener - Trigger ID Group
+    public int IDGroup  //Reads and writes GroupingID
+    {
+        get { return GroupingID; }
+        set { GroupingID = value; }
+    }
 
     private void Awake()
     {
@@ -40,10 +46,5 @@ public class Door : MonoBehaviour, ITerminalListener
     public void OnActivated()
     {
         OnTriggered();
-    }
-
-    public int GetID()
-    {
-        return sortingID;
     }
 }

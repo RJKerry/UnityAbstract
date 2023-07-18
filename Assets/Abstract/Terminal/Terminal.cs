@@ -14,7 +14,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public PlayerInputManager interactingPlayer;
 
     public int IDGroup = 0;
-    List<ITerminalListener> ActiveListeners;
+    private List<ITerminalListener> ActiveListeners;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         var listeners = FindObjectsOfType<MonoBehaviour>().OfType<ITerminalListener>();
         foreach (var listener in listeners) 
         {
-            if (listener.GetID() == IDGroup)
+            if (listener.IDGroup == IDGroup)
             {
                 ActiveListeners.Add(listener);
             }
