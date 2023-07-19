@@ -12,7 +12,7 @@ public class Door : MonoBehaviour, ITerminalListener
     float eTime, tTime = 1; //elapsed time, target time
     public Light LockedLight, UnlockedLight;
 
-    
+
     public int GroupingID; //Nescesarry for anything implementing ITerminalListener - Trigger ID Group
     public int IDGroup  //Reads and writes GroupingID
     {
@@ -23,7 +23,7 @@ public class Door : MonoBehaviour, ITerminalListener
     private void Awake()
     {
         StartPos = transform.position;
-        EndPos = transform.position+Vector3.up*5;
+        EndPos = transform.position + Vector3.up * 5;
     }
 
 
@@ -44,9 +44,12 @@ public class Door : MonoBehaviour, ITerminalListener
 
     public void OnActivated()
     {
-        Debug.Log("I am a door");
-        Unlocked = true;
-        LockedLight.gameObject.SetActive(false);
-        UnlockedLight.gameObject.SetActive(true);
+        if (!Unlocked)
+        {
+            Debug.Log("I am a door");
+            Unlocked = true;
+            LockedLight.gameObject.SetActive(false);
+            UnlockedLight.gameObject.SetActive(true);
+        } 
     }
 }

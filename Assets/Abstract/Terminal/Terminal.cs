@@ -24,6 +24,8 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         standPosition = transform.GetChild(1).transform.gameObject;
         terminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
 
+        //set the terminal canvas' event camear to main camera somewhere otherwise it wont drag and drop work
+
         ActiveListeners = new List<ITerminalListener>();
         GatherTerminalListeners();
     }
@@ -52,10 +54,10 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         interactingPlayer = messageSource;
 
         //TEMPORARY
-        foreach (var listener in ActiveListeners)
+/*        foreach (var listener in ActiveListeners)
         {
-            listener.OnActivated();
-        }
+            //listener.OnActivated();
+        }*/
     }
 
     public void setPriority(int priority)
