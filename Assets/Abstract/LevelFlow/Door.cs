@@ -13,12 +13,8 @@ public class Door : MonoBehaviour, ITerminalListener
     public Light LockedLight, UnlockedLight;
 
 
-    public int GroupingID; //Nescesarry for anything implementing ITerminalListener - Trigger ID Group
-    public int IDGroup  //Reads and writes GroupingID
-    {
-        get { return GroupingID; }
-        set { GroupingID = value; }
-    }
+    public int _IDGroup; //Nescesarry for anything implementing ITerminalListener - Trigger ID Group
+    public int IDGroup { get => _IDGroup; set => _IDGroup = value; } //Better syntax
 
     private void Awake()
     {
