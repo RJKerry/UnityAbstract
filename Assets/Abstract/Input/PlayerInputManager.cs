@@ -153,7 +153,7 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         if(canRecieveInput && context.performed)
         {
             RaycastHit hitObject;
-            if (Physics.Raycast(cameraObject.transform.position, cameraObject.transform.forward, out hitObject))
+            if (Physics.Raycast(cameraObject.transform.position, cameraObject.transform.forward, out hitObject, interactDist))
             {
                 hitObject.transform.GetComponent<IInteractable>()?.OnInteract(this); //Condensed interface check
             }
