@@ -1,19 +1,33 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Portal : ItemData
+
+[CreateAssetMenu(menuName = "ScriptableObjects/ItemBase/PortalItem")]
+public class PortalItem : ItemData
 {
-    public Camera PortalCam;
-    public Camera PlayerCam;
-    public RenderTexture portalTex;
-    public GameObject portal;
-    private bool portalActive = false;
-    private float tick;
+    //private Camera PortalCam;
+
+    private Camera PlayerCam;
+
+    //public RenderTexture portalTex;
+    //public GameObject portal;
+
+    //private bool portalActive = false;
+
+    //private float tick;
 
     // Update is called once per frame
 
-    private void update()
+    private Portal CurrentPortal;
+
+/*    private void Awake()
+    {
+        //PortalCam = portal.GetComponent<Camera>();
+    }*/
+
+/*    private void update()
     {
         if (portalActive)
         {
@@ -32,19 +46,18 @@ public class Portal : ItemData
                 portal.transform.position = new Vector3(0, 0, 0);
             }
         }
-    }
+    }*/
 
     public override void ItemUsed()
     {
+        Debug.Log("Portal item has been used");
 
         RaycastHit hit;
         if (Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out hit))
         {
             if (hit.transform.CompareTag("Wall"))
             {
-                // Place portal on the wall
-                portal.transform.position = hit.point;
-                portal.transform.rotation = Quaternion.LookRotation(hit.normal, Vector3.up) * Quaternion.Euler(90, 0, 0);
+                Instantiate(portal, hit.point, Quaternion.LookRotation(hit.normal, Vector3.up) * Quaternion.Euler(90, 0, 0));
 
                 // Calculate position of camera on the other side of the wall
                 Vector3 cameraPos = hit.point + hit.normal * 0.01f;
@@ -55,10 +68,8 @@ public class Portal : ItemData
                 // Set camera's position
                 PortalCam.transform.position = cameraPos;
                 portalActive = true;
-                tick = Time.deltaTime;
+                //tick = Time.deltaTime;
             }
         }
-
-
     }
 }
