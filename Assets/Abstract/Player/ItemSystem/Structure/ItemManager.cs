@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class ItemManager : MonoBehaviour
 {
     //reference to however we are communicating this data if we need one
-    public ItemData equippedItem;
-    public int itemIndex = 0;
+    public int CurrentItemIndex = 0;
     public List<ItemData> ownedItems; //This can be a dictionary at some point potentially
     private int maxItems = 3;
 
@@ -19,7 +19,7 @@ public class ItemManager : MonoBehaviour
 
     public void UseItem()
     {
-        equippedItem?.ItemUsed();
+        ownedItems[CurrentItemIndex]?.ItemUsed();
     }
 
     private void Awake()
@@ -32,10 +32,9 @@ public class ItemManager : MonoBehaviour
     /// </summary>
     void Init()
     {
-        ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY
+        //ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY
         itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
         slotManager = FindObjectOfType<ItemSlotManager>();
-        equippedItem = ownedItems[0];
         CycleItem(0, WeaponSwitchTypes.Absolute);
     }
     
@@ -47,15 +46,15 @@ public class ItemManager : MonoBehaviour
     public void CycleItem(int step, WeaponSwitchTypes switchType)
     {
         //Debug.Log(step);
-        int prevIndex = itemIndex;
+        int prevIndex = CurrentItemIndex;
         switch (switchType)
         {
             case WeaponSwitchTypes.Absolute:
                 if (step < ownedItems.Count && step >= 0)
-                    itemIndex = itemIndex != step ? step : itemIndex; //if new != old update, else stay as old
+                    CurrentItemIndex = CurrentItemIndex != step ? step : CurrentItemIndex; //if new != old update, else stay as old
                 break;
             case WeaponSwitchTypes.Cycle:
-                int newIndex = itemIndex + step; //will be limited to a normalized axis input (-1 to 1)
+                int newIndex = CurrentItemIndex + step; //will be limited to a normalized axis input (-1 to 1)
                 if (!(newIndex < ownedItems.Count && newIndex >= 0)) //if the telegraphed new index is out of bounds
                 {
                     if(newIndex < 0)
@@ -63,21 +62,19 @@ public class ItemManager : MonoBehaviour
                     if (newIndex >= ownedItems.Count)
                         newIndex = 0;
                 }
-                itemIndex = newIndex;
+                CurrentItemIndex = newIndex;
                 break;
             default:
                 Debug.LogError("WeaponSwitchType " + switchType + "Has no implemented case");
                 break;
         }
-        if(itemIndex!=prevIndex)
-            UpdateItemData();
+        if(CurrentItemIndex!=prevIndex)
+            SwitchToNewItem();
     }
 
-    public void UpdateItemData()
+    public void SwitchToNewItem()
     {
-        equippedItem = ownedItems[itemIndex];
-        //slotManager.ActiveUISlots[itemIndex].OnSelected();
-        //Trigger item swap animation, or send a message to a respective animation manager (second would be nicer)
+        GameObject equippedItem = Instantiate(ownedItems[CurrentItemIndex], Vector3.zero, Quaternion.identity, itemSocket.transform).GameObject();
     }
 
     public bool AddItem(ItemData newItem)
@@ -89,7 +86,6 @@ public class ItemManager : MonoBehaviour
         }
         return false;
     }
-
 }
 
 public enum WeaponSwitchTypes

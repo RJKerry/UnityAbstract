@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4560010745688562100}
-  - component: {fileID: 5095040178870185770}
-  - component: {fileID: 3725380586017797109}
+  - component: {fileID: 3899104312423078052}
+  - component: {fileID: 6930754272360716978}
   - component: {fileID: -2600889491842518278}
   m_Layer: 0
   m_Name: TestTurretItem
@@ -26,23 +26,23 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522160269048764254}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -2.515, y: 0.544, z: -4.11}
-  m_LocalScale: {x: 100, y: 99.999985, z: 436.92136}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5095040178870185770
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!33 &3899104312423078052
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522160269048764254}
-  m_Mesh: {fileID: -5495902117074765545, guid: 33020c5ffc2592c43b37f64d0e592386, type: 3}
---- !u!23 &3725380586017797109
+  m_Mesh: {fileID: -5495902117074765545, guid: 7681307c8e34183469377c14765d1e82, type: 3}
+--- !u!23 &6930754272360716978
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 33020c5ffc2592c43b37f64d0e592386, type: 3}
+  - {fileID: -876546973899608171, guid: 7119d4ca416836444b64c4c5a01ff7f9, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,4 +96,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562093c7ec8ad9c449c63f7ae67c2083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 1b5e4e811a6b2104a9d5c59a95b227f9, type: 2}
+  item: {fileID: 11400000, guid: 34b6a7c282099794b8b1520c9b8f6b85, type: 2}

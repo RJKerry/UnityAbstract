@@ -28,11 +28,5 @@ public class ObserverController : MonoBehaviour, ITerminalListener
     {
         ViewTargeter = GetComponentInChildren<OverseerViewTargeter>();
         OverseerView = GetComponentInChildren<CinemachineVirtualCamera>();
-/*        Debug.Log(IDGroup);
-        this.GetComponent<ITerminalListener>().IDGroup = 3;
-        Debug.Log(IDGroup);
-        IDGroup = 1;
-        Debug.Log(IDGroup);*/
-
     }
 }

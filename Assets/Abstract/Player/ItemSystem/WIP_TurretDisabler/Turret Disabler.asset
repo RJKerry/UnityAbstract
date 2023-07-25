@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5469fce4db70de0439bee9e853934850, type: 3}
+  m_Name: Turret Disabler
+  m_EditorClassIdentifier: 
+  Name: Turret Disabler
+  itemIcon: {fileID: 0}
+  itemObject: {fileID: 522160269048764254, guid: 352978c6356cf3349b43641059691f78, type: 3}
