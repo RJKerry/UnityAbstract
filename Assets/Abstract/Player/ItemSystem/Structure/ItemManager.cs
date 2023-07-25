@@ -32,7 +32,7 @@ public class ItemManager : MonoBehaviour
     /// </summary>
     void Init()
     {
-        //ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY
+        ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY -- ALSO MAKES A BLANK OBJECT, 
         itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
         slotManager = FindObjectOfType<ItemSlotManager>();
         CycleItem(0, WeaponSwitchTypes.Absolute);
