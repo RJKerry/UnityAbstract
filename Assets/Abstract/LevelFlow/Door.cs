@@ -12,7 +12,6 @@ public class Door : MonoBehaviour, ITerminalListener
     float eTime, tTime = 1; //elapsed time, target time
     public Light LockedLight, UnlockedLight;
 
-
     public int _IDGroup; //Nescesarry for anything implementing ITerminalListener - Trigger ID Group
     public int IDGroup { get => _IDGroup; set => _IDGroup = value; } //Better syntax
 
@@ -21,7 +20,6 @@ public class Door : MonoBehaviour, ITerminalListener
         StartPos = transform.position;
         EndPos = transform.position + Vector3.up * 5;
     }
-
 
     /// <summary>
     /// Update driven lerp is not a good thing, but this is for testing 

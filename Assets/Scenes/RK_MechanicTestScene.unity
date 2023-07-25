@@ -1116,7 +1116,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1828
+  m_Name: pb_Mesh-23934
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3031,6 +3031,14 @@ PrefabInstance:
     - target: {fileID: 4838975993091126165, guid: 7f6c86f765646aa458d5d532aae25818, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.084311515
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450068358433449658, guid: 7f6c86f765646aa458d5d532aae25818, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1786
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450068358433449658, guid: 7f6c86f765646aa458d5d532aae25818, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1429
       objectReference: {fileID: 0}
     - target: {fileID: 6899613512387816716, guid: 7f6c86f765646aa458d5d532aae25818, type: 3}
       propertyPath: m_Interactable
