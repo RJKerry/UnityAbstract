@@ -10,7 +10,9 @@ public interface IInteractable
 
 public interface IDamageable
 {
-    void OnDamage();
+    public float Health { get; set; }
+    float GetMaxHealthDefault(float MAX_HEALTH_DEFAULT = 1.0f); //Do not override
+    public void OnDamage(float damage);
 }
 
 public interface ICanBeDisabled
@@ -25,6 +27,6 @@ public interface ICanBeGrabbed
 
 public interface ITerminalListener
 {
-    int IDGroup { get; set; } //Interface has field IDGroup, implementing classes can have ID field this hooks into
+    public int IDGroup { get; set; } //Interface has field IDGroup, implementing classes can have ID field this hooks into
     void OnActivated();
 }

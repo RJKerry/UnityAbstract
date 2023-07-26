@@ -20,7 +20,7 @@ public class PortalItem : ItemData
 
     // Update is called once per frame
 
-    private Portal CurrentPortal;
+    //private Portal CurrentPortal;
 
 /*    private void Awake()
     {
@@ -57,17 +57,17 @@ public class PortalItem : ItemData
         {
             if (hit.transform.CompareTag("Wall"))
             {
-                Instantiate(portal, hit.point, Quaternion.LookRotation(hit.normal, Vector3.up) * Quaternion.Euler(90, 0, 0));
+                //Instantiate(portal, hit.point, Quaternion.LookRotation(hit.normal, Vector3.up) * Quaternion.Euler(90, 0, 0));
 
                 // Calculate position of camera on the other side of the wall
-                Vector3 cameraPos = hit.point + hit.normal * 0.01f;
+                //Vector3 cameraPos = hit.point + hit.normal * 0.01f;
 
                 // Set camera's render texture to the portal texture
-                PortalCam.targetTexture = portalTex;
+                //PortalCam.targetTexture = portalTex;
 
                 // Set camera's position
-                PortalCam.transform.position = cameraPos;
-                portalActive = true;
+                //PortalCam.transform.position = cameraPos;
+                //portalActive = true;
                 //tick = Time.deltaTime;
             }
         }
