@@ -39,7 +39,7 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
 
         transitioning = true;
 
-        for (int i = 0; i <= 1; i++)
+        for (int i = 0; i <= 1; i++) //This is temporary and should be developed further (Auto close)
         {
             eTime = 0;
             FMODUnity.RuntimeManager.PlayOneShot(i == 0 ? DoorOpen : DoorClose, transform.position);
