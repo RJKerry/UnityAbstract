@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{89ca9735-1ba1-4239-9867-3968fe21326b}">
+		<property name="assetPath">
+			<value>sonarping.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>3.030204081632653</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c46d41b7-d8a1-4bf9-b262-6e65c64d697f}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{afb4a5df-b02e-4a9e-b4ff-c598cb28ee67}">
+		<property name="assetPath">
+			<value>futuristic_air_compression_door_open_01.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.5071428571428571</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c46d41b7-d8a1-4bf9-b262-6e65c64d697f}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -7801,13 +7801,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbf60ab774a7a3428739e0fdf317b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPos: {x: 0, y: 0, z: 0}
-  EndPos: {x: 0, y: 0, z: 0}
+  ClosePos: {x: 0, y: 0, z: 0}
+  OpenPos: {x: 0, y: 0, z: 0}
   triggered: 0
   Unlocked: 0
+  transitioning: 0
+  eTime: 0
+  tTime: 1
   LockedLight: {fileID: 433192338}
   UnlockedLight: {fileID: 767903999}
   _IDGroup: 0
+  UnlockDelay: 5
+  DoorOpen: event:/Door/DoorOpen
+  DoorClose: event:/Door/DoorClose
+  DoorUnlock: event:/Door/DoorUnlock
 --- !u!64 &406923195
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11731,7 +11738,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -18654,13 +18661,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbf60ab774a7a3428739e0fdf317b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPos: {x: 0, y: 0, z: 0}
-  EndPos: {x: 0, y: 0, z: 0}
+  ClosePos: {x: 0, y: 0, z: 0}
+  OpenPos: {x: 0, y: 0, z: 0}
   triggered: 0
   Unlocked: 0
+  transitioning: 0
+  eTime: 0
+  tTime: 1
   LockedLight: {fileID: 0}
   UnlockedLight: {fileID: 0}
   _IDGroup: 0
+  UnlockDelay: 5
+  DoorOpen: event:/Door/DoorOpen
+  DoorClose: event:/Door/DoorClose
+  DoorUnlock: event:/Door/DoorUnlock
 --- !u!64 &960954255
 MeshCollider:
   m_ObjectHideFlags: 0
