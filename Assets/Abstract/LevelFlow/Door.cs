@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour, ITerminalListener
+public class Door : MonoBehaviour, ITerminalListener, IInteractable
 {
     public Vector3 StartPos, EndPos;
     public bool triggered;
@@ -26,12 +26,18 @@ public class Door : MonoBehaviour, ITerminalListener
     /// </summary>
     void Update()
     {
-        if (triggered)
+
+    }
+
+    public IEnumerator Activated(Vector3 startPos, Vector3 endPos)
+    {
+        if (true)
         {
-            if (eTime < tTime)
+            while (eTime < tTime)
             {
                 transform.position = Vector3.Lerp(StartPos, EndPos, eTime / tTime);
                 eTime += Time.deltaTime;
+                yield return null;
             }
         }
     }
@@ -41,9 +47,19 @@ public class Door : MonoBehaviour, ITerminalListener
         if (!Unlocked)
         {
             Debug.Log("I am a door");
-            Unlocked = true;
-            LockedLight.gameObject.SetActive(false);
-            UnlockedLight.gameObject.SetActive(true);
+            //Unlocked = true;
         } 
+    }
+
+    public void OnInteract(PlayerInputManager messageSource)
+    {
+        if (Unlocked) UnlockSequence();
+    }
+
+    public void UnlockSequence()
+    {
+        LockedLight.gameObject.SetActive(false);
+        UnlockedLight.gameObject.SetActive(true);
+
     }
 }
