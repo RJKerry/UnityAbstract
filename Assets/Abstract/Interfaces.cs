@@ -12,7 +12,7 @@ public interface IDamageable
 {
     public float Health { get; set; }
     float GetMaxHealthDefault(float MAX_HEALTH_DEFAULT = 1.0f); //Do not override
-    public void OnDamage(float damage);
+    public void OnDamageRecieved(float damage);
 }
 
 public interface ICanBeDisabled

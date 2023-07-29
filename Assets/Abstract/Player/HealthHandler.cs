@@ -17,7 +17,7 @@ public class HealthHandler : MonoBehaviour, IDamageable
         Health = GetMaxHealthDefault();
     }
 
-    public void OnDamage(float damage)
+    public void OnDamageRecieved(float damage)
     {
         Health -= damage;
         if(Health < 0 ) 
