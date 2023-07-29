@@ -16,6 +16,8 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public int IDGroup = 0;
     private List<ITerminalListener> ActiveListeners;
 
+    public float DetachBuffer = 2f;
+
     private void Awake()
     {
         terminalControls = new PlayerControls();
@@ -47,7 +49,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     {
         messageSource.playerControls.Disable();
         terminalControls.TerminalInput.Enable();
-        setPriority(50);
+        SetCameraPriority(50);
         messageSource.TeleportTo(standPosition.transform.position);
         messageSource.canRecieveInput = false;
         Debug.Log(gameObject.name);
@@ -60,17 +62,17 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         }*/
     }
 
-    public void setPriority(int priority)
+    public void SetCameraPriority(int priority)
     {
         terminalCam.Priority = priority;
     }
 
-    public void EndInteract()
+    public IEnumerator EndInteract()
     {
-        setPriority(0);
+        SetCameraPriority(0);
+        yield return new WaitForSecondsRealtime(DetachBuffer); //Prevents player moving preemptive to the camera switchback
         interactingPlayer.canRecieveInput = true;
         interactingPlayer = null;
-
     }
 
     public void OnExit(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -79,7 +81,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
             Debug.Log(gameObject.name);
             interactingPlayer.playerControls.Enable();
             terminalControls.TerminalInput.Disable();
-            EndInteract();
+            StartCoroutine(EndInteract());
         }
     }
 

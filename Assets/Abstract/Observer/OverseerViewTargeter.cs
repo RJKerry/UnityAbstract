@@ -37,7 +37,6 @@ public class OverseerViewTargeter : MonoBehaviour
             { 
                 MoveViewTargetToPoint(POIs[currentTargetIndex].transform.position, eTime, tTime); //update the position of the object
             }
-
         }
     }
 

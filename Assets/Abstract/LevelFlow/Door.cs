@@ -21,6 +21,9 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
 
     public float UnlockDelay = 5f;
 
+    /// <summary>
+    /// References to FMOD events
+    /// </summary>
     public string 
         DoorOpen = "event:/Door/DoorOpen",
         DoorClose = "event:/Door/DoorClose", 
