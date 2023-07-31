@@ -64,7 +64,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
     public void InitUIListener() 
     {
-    
+        
     }
 
     public void SetCameraPriority(int priority)
