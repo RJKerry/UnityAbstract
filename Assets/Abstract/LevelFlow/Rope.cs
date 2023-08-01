@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rope : MonoBehaviour, ICanBeGrabbed
+public class Rope : MonoBehaviour //, ICanBeGrabbed
 {
     public Transform playerTransform;
     public int ropeSegmentCount = 10;
@@ -26,12 +26,12 @@ public class Rope : MonoBehaviour, ICanBeGrabbed
         }
     }
 
-    public void OnGrabbed(Vector3 hitPoint)
+/*    public void OnGrabbed(Vector3 hitPoint)
     {
         Debug.Log("Test");
 
         UpdateRopePoints(hitPoint);
-    }
+    }*/
 
     private void UpdateRopePoints(Vector3 startPoint)
     {

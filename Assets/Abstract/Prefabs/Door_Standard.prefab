@@ -488,13 +488,14 @@ MonoBehaviour:
   ClosePos: {x: 0, y: 0, z: 0}
   OpenPos: {x: 0, y: 0, z: 0}
   triggered: 0
-  Unlocked: 1
+  unlocked: 1
   transitioning: 0
   eTime: 0
   tTime: 1
   LockedLight: {fileID: 3422209319964489454}
   UnlockedLight: {fileID: 3422209320788168955}
   _IDGroup: 1
+  _TerminalButtonIcon: {fileID: 21300000, guid: 1bfb1b224548b41448a8246714b1d441, type: 3}
   UnlockDelay: 5
   DoorOpen: event:/Door/DoorOpen
   DoorClose: event:/Door/DoorClose

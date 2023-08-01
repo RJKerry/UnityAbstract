@@ -196,7 +196,6 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         gameObject.transform.position = newPosition;
     }
 
-
     public void OnPause(InputAction.CallbackContext context)
     {
         if (context.performed)

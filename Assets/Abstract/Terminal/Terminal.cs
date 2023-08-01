@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEditor.UIElements;
 
 public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalInputActions
 {
@@ -19,6 +21,8 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public int IDGroup = 0;
     private Dictionary<ITerminalListener, Button> ActiveListeners;
 
+    public GameObject ButtonTemplate;
+
     public float DetachBuffer = 2f;
 
     private void Awake()
@@ -32,6 +36,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         //set the terminal canvas' event camear to main camera somewhere otherwise assets wont drag and drop 
 
         TerminalCanvas = GetComponentInChildren<Canvas>();
+        ButtonTemplate = Resources.Load<GameObject>("MenuAssets/ButtonGenBase");
 
         ActiveListeners = new Dictionary<ITerminalListener, Button>();
         GatherTerminalListeners();
@@ -39,21 +44,22 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
     public virtual void GatherTerminalListeners()
     {
-        List<ITerminalListener> listeners = (List<ITerminalListener>)FindObjectsOfType<MonoBehaviour>().OfType<ITerminalListener>();
-        foreach (ITerminalListener listener in listeners) 
+        var listeners = FindObjectsOfType<MonoBehaviour>().OfType<ITerminalListener>();
+        foreach (var listener in listeners) 
         {
             if (listener.IDGroup == IDGroup)
             {
-                Debug.Log(listener);
+                Debug.Log(listener.GetType());
                 ActiveListeners.Add(listener, GenerateInteractionButton(listener));
             }
         }
     }
+
     public Button GenerateInteractionButton(ITerminalListener listener) //Could load a prefab from resources or create a whole new button 
     {
-        Button GeneratedButton = gameObject.AddComponent<Button>();
-        //button canvas parent
-        GeneratedButton.transform.SetParent(TerminalCanvas.transform, false);
+        GameObject GeneratedButtonObject = Instantiate(ButtonTemplate, Vector3.zero, Quaternion.identity);
+        GeneratedButtonObject.transform.SetParent(TerminalCanvas.transform, false);
+        Button GeneratedButton = GeneratedButtonObject.GetComponent<Button>();
         GeneratedButton.image.sprite = listener.TerminalButtonIcon;
         GeneratedButton.onClick.AddListener(listener.OnActivated);
         return GeneratedButton;
@@ -68,12 +74,6 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         messageSource.canRecieveInput = false;
         Debug.Log(gameObject.name);
         InteractingPlayer = messageSource;
-
-        //TEMPORARY
-/*        foreach (var listener in ActiveListeners)
-        {
-            //listener.OnActivated();
-        }*/
     }
 
 
