@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor.UIElements;
+using UnityEditor.Events;
+using UnityEngine.Events;
 
 public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalInputActions
 {
@@ -36,6 +38,9 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         //set the terminal canvas' event camear to main camera somewhere otherwise assets wont drag and drop 
 
         TerminalCanvas = GetComponentInChildren<Canvas>();
+
+        TerminalCanvas.worldCamera = Camera.main; //This will work for instances in a single scene
+
         ButtonTemplate = Resources.Load<GameObject>("MenuAssets/ButtonGenBase");
 
         ActiveListeners = new Dictionary<ITerminalListener, Button>();
@@ -61,7 +66,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         GeneratedButtonObject.transform.SetParent(TerminalCanvas.transform, false);
         Button GeneratedButton = GeneratedButtonObject.GetComponent<Button>();
         GeneratedButton.image.sprite = listener.TerminalButtonIcon;
-        GeneratedButton.onClick.AddListener(listener.OnActivated);
+        UnityEventTools.AddPersistentListener(GeneratedButton.onClick, new UnityAction(listener.OnActivated));
         return GeneratedButton;
     }
 
