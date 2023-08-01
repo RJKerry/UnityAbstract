@@ -3,57 +3,71 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalInputActions
 {
 
-    public CinemachineVirtualCamera terminalCam;
-    public GameObject standPosition;
+    public CinemachineVirtualCamera TerminalCam;
+    public GameObject StandPosition;
 
-    public PlayerControls terminalControls;
-    public PlayerInputManager interactingPlayer;
+    public PlayerControls TerminalControls;
+    public PlayerInputManager InteractingPlayer;
+
+    public Canvas TerminalCanvas;
 
     public int IDGroup = 0;
-    private List<ITerminalListener> ActiveListeners;
+    private Dictionary<ITerminalListener, Button> ActiveListeners;
 
     public float DetachBuffer = 2f;
 
     private void Awake()
     {
-        terminalControls = new PlayerControls();
-        terminalControls.TerminalInput.SetCallbacks(this);
+        TerminalControls = new PlayerControls();
+        TerminalControls.TerminalInput.SetCallbacks(this);
 
-        standPosition = transform.GetChild(1).transform.gameObject;
-        terminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
+        StandPosition = transform.GetChild(1).transform.gameObject;
+        TerminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
 
-        //set the terminal canvas' event camear to main camera somewhere otherwise it wont drag and drop work
+        //set the terminal canvas' event camear to main camera somewhere otherwise assets wont drag and drop 
 
-        ActiveListeners = new List<ITerminalListener>();
+        TerminalCanvas = GetComponentInChildren<Canvas>();
+
+        ActiveListeners = new Dictionary<ITerminalListener, Button>();
         GatherTerminalListeners();
     }
 
     public virtual void GatherTerminalListeners()
     {
-        var listeners = FindObjectsOfType<MonoBehaviour>().OfType<ITerminalListener>();
-        foreach (var listener in listeners) 
+        List<ITerminalListener> listeners = (List<ITerminalListener>)FindObjectsOfType<MonoBehaviour>().OfType<ITerminalListener>();
+        foreach (ITerminalListener listener in listeners) 
         {
             if (listener.IDGroup == IDGroup)
             {
                 Debug.Log(listener);
-                ActiveListeners.Add(listener);
+                ActiveListeners.Add(listener, GenerateInteractionButton(listener));
             }
         }
+    }
+    public Button GenerateInteractionButton(ITerminalListener listener) //Could load a prefab from resources or create a whole new button 
+    {
+        Button GeneratedButton = gameObject.AddComponent<Button>();
+        //button canvas parent
+        GeneratedButton.transform.SetParent(TerminalCanvas.transform, false);
+        GeneratedButton.image.sprite = listener.TerminalButtonIcon;
+        GeneratedButton.onClick.AddListener(listener.OnActivated);
+        return GeneratedButton;
     }
 
     public void OnInteract(PlayerInputManager messageSource)
     {
         messageSource.playerControls.Disable();
-        terminalControls.TerminalInput.Enable();
+        TerminalControls.TerminalInput.Enable();
         SetCameraPriority(50);
-        messageSource.TeleportTo(standPosition.transform.position);
+        messageSource.TeleportTo(StandPosition.transform.position);
         messageSource.canRecieveInput = false;
         Debug.Log(gameObject.name);
-        interactingPlayer = messageSource;
+        InteractingPlayer = messageSource;
 
         //TEMPORARY
 /*        foreach (var listener in ActiveListeners)
@@ -62,30 +76,26 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         }*/
     }
 
-    public void InitUIListener() 
-    {
-        
-    }
 
     public void SetCameraPriority(int priority)
     {
-        terminalCam.Priority = priority;
+        TerminalCam.Priority = priority;
     }
 
     public IEnumerator EndInteract()
     {
         SetCameraPriority(0);
         yield return new WaitForSecondsRealtime(DetachBuffer); //Prevents player moving preemptive to the camera switchback
-        interactingPlayer.canRecieveInput = true;
-        interactingPlayer = null;
+        InteractingPlayer.canRecieveInput = true;
+        InteractingPlayer = null;
     }
 
     public void OnExit(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if(context.performed && interactingPlayer != null) {
+        if(context.performed && InteractingPlayer != null) {
             Debug.Log(gameObject.name);
-            interactingPlayer.playerControls.Enable();
-            terminalControls.TerminalInput.Disable();
+            InteractingPlayer.playerControls.Enable();
+            TerminalControls.TerminalInput.Disable();
             StartCoroutine(EndInteract());
         }
     }
@@ -93,7 +103,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     #region Input Enable/Disable
     private void OnEnable()
     {
-        terminalControls.Disable();
+        TerminalControls.Disable();
     }
 
     private void OnDisable()

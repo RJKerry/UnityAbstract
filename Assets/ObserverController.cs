@@ -13,6 +13,9 @@ public class ObserverController : MonoBehaviour, ITerminalListener
     public int _IDGroup = 0;
     public int IDGroup { get => _IDGroup; set => _IDGroup = value; }
 
+    public Sprite _TerminalButtonIcon;
+    public Sprite TerminalButtonIcon { get => _TerminalButtonIcon; set => _TerminalButtonIcon = value; }
+
     public void OnActivated()
     {
         StartCoroutine(PossessionSequence());

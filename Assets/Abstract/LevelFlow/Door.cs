@@ -9,7 +9,7 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
     public Vector3 ClosePos, OpenPos;
 
     public bool triggered;
-    public bool Unlocked = true;
+    public bool unlocked = true;
     [SerializeField]    private bool transitioning = false;
 
 
@@ -18,6 +18,9 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
 
     public int _IDGroup; //Nescesarry for anything implementing ITerminalListener - Trigger ID Group
     public int IDGroup { get => _IDGroup; set => _IDGroup = value; } //Better syntax
+
+    public Sprite _TerminalButtonIcon;
+    public Sprite TerminalButtonIcon { get => _TerminalButtonIcon; set => _TerminalButtonIcon = value; }
 
     public float UnlockDelay = 5f;
 
@@ -61,13 +64,13 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
 
     public void OnInteract(PlayerInputManager messageSource)
     {
-        if (Unlocked) StartCoroutine(OpenDoor(ClosePos, OpenPos));
+        if (unlocked) StartCoroutine(OpenDoor(ClosePos, OpenPos));
     }
 
     public void OnActivated()
     {
         //Unlock
-        if (!Unlocked)
+        if (!unlocked)
         {
             StartCoroutine(UnlockSequence());
         }
@@ -78,7 +81,7 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
         LockedLight.gameObject.SetActive(false);
         yield return new WaitForSecondsRealtime(UnlockDelay);
         UnlockedLight.gameObject.SetActive(true);
-        Unlocked = true;
+        unlocked = true;
         FMODUnity.RuntimeManager.PlayOneShot(DoorUnlock, transform.position);
     }
 }
