@@ -26,7 +26,7 @@ public class UIController : MonoBehaviour
 
     // Get items from itemanager and display them in the UI
 
-    public void getItems()
+    public void getItems() //getItems is causing issues at present, nullreferences on 39
     {
         // Loop through the items list and display them in the UI
         for (int i = 0; i < items.Count; i++)
@@ -36,7 +36,7 @@ public class UIController : MonoBehaviour
                 // Check if the item has an icon
                 if (items[i].itemIcon == null)
                 {
-                    GameObject.Find("Slot-" + (i + 1)).transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = new Color(1, 1, 1, 0);
+                    GameObject.Find("Slot-" + (i + 1)).transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = new Color(1, 1, 1, 0); //Error in console for this line
                 }
                 // If it does, display it
                 else

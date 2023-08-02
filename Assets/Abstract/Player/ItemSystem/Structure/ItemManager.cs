@@ -36,6 +36,8 @@ public class ItemManager : MonoBehaviour
         ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY -- ALSO MAKES A BLANK OBJECT, 
         itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
         slotManager = FindObjectOfType<ItemSlotManager>();
+
+        //Delegate functionality to Player Hud manager and perform validity checks there, will help keep code clean and encapsulated
         HUD = GameObject.FindObjectOfType<Canvas>().gameObject;
 
         if (HUD != null)
@@ -46,6 +48,8 @@ public class ItemManager : MonoBehaviour
         {
             Debug.Log("Not Valid");
         }
+
+        //
 
         CycleItem(0, WeaponSwitchTypes.Absolute);
     }
@@ -66,7 +70,7 @@ public class ItemManager : MonoBehaviour
                     CurrentItemIndex = CurrentItemIndex != step ? step : CurrentItemIndex; //if new != old update, else stay as old
                 break;
             case WeaponSwitchTypes.Cycle:
-                int newIndex = CurrentItemIndex + -step; //will be limited to a normalized axis input (-1 to 1)
+                int newIndex = CurrentItemIndex + step; //will be limited to a normalized axis input (-1 to 1)
                 if (!(newIndex < ownedItems.Count && newIndex >= 0)) //if the telegraphed new index is out of bounds
                 {
                     if(newIndex < 0)
@@ -82,12 +86,12 @@ public class ItemManager : MonoBehaviour
         }
         if(CurrentItemIndex!=prevIndex)
             SwitchToNewItem();
-            HUD.GetComponent<UIController>().selectSlot(CurrentItemIndex);
     }
 
     public void SwitchToNewItem()
     {
-        GameObject equippedItem = Instantiate(ownedItems[CurrentItemIndex], Vector3.zero, Quaternion.identity, itemSocket.transform).GameObject();
+        HUD.GetComponent<UIController>().selectSlot(CurrentItemIndex);
+        //GameObject equippedItem = Instantiate(ownedItems[CurrentItemIndex], Vector3.zero, Quaternion.identity, itemSocket.transform).GameObject();
     }
 
     public bool AddItem(ItemData newItem)
@@ -95,7 +99,10 @@ public class ItemManager : MonoBehaviour
         if (ownedItems.Count < maxItems)
         {
             ownedItems.Add(newItem);
-            HUD.GetComponent<UIController>().getItems();
+
+            HUD.GetComponent<UIController>().getItems(); //we want to minimise use of Getcomponents during repeat functionalities for efficiency
+                                                         //- this coincides with creating a class to encapsulate The logic for connecting the manager with the input
+
             return true;
         }
         return false;

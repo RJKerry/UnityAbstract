@@ -278,7 +278,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""6cc3d606-e59e-4719-aeb6-e8b09d76abc3"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
-                    ""processors"": ""Clamp(min=-1,max=1)"",
+                    ""processors"": ""Clamp(min=-1,max=1),Invert"",
                     ""groups"": """",
                     ""action"": ""CycleItem"",
                     ""isComposite"": false,
