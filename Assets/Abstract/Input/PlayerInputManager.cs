@@ -9,12 +9,13 @@ using UnityEngine.Serialization;
 //Movement functionalities
 public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerActions
 {
+
     public GameObject cameraObject; //the gameobject the cinemachine brain is attached to
     public CharacterController playerCharacterController;
     public PlayerControls playerControls;
     public ItemManager playerItemManager;
     private PauseController playerPauseController;
-    
+
     public Vector3 rawMovementInput; //Raw directional input translated to world space
     public Vector3 rawLookInput;
 
@@ -59,6 +60,7 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         playerPauseController = GetComponent<PauseController>();
         playerItemManager = GetComponent<ItemManager>();
         cameraObject = GetComponentInChildren<CinemachineVirtualCamera>().gameObject;
+
 
     }
 

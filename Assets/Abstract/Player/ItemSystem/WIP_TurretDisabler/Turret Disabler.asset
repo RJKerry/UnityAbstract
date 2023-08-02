@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Turret Disabler
   m_EditorClassIdentifier: 
   Name: Turret Disabler
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 8997e2b90bc396d4f8dca47d5a4c2bf0, type: 3}
   itemObject: {fileID: 522160269048764254, guid: 352978c6356cf3349b43641059691f78, type: 3}
+  InteractDist: 0

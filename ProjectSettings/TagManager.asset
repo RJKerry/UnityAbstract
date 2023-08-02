@@ -9,6 +9,7 @@ TagManager:
   - ExitButton
   - ItemSocket
   - StandPosition
+  - SelectionBox
   layers:
   - Default
   - TransparentFX

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: AccessCard
   m_EditorClassIdentifier: Assembly-CSharp::GrabObject
   Name: Access Card
-  itemIcon: {fileID: 21300000, guid: a1e53018130664141ad43434fc5f1732, type: 3}
+  itemIcon: {fileID: 21300000, guid: 0f68f96627ab81f4ab1ba24be1b8708a, type: 3}
   itemObject: {fileID: 3137217714669111500, guid: 001ec498d62bb2d4295a97ca108b1822, type: 3}
+  InteractDist: 0

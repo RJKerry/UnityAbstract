@@ -16,6 +16,7 @@ public class ItemManager : MonoBehaviour
     public GameObject itemSocket;
     
     public ItemSlotManager slotManager;
+    private GameObject HUD;
 
     public void UseItem()
     {
@@ -35,6 +36,17 @@ public class ItemManager : MonoBehaviour
         ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY -- ALSO MAKES A BLANK OBJECT, 
         itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
         slotManager = FindObjectOfType<ItemSlotManager>();
+        HUD = GameObject.FindObjectOfType<Canvas>().gameObject;
+
+        if (HUD != null)
+        {
+            Debug.Log("Valid");
+        }
+        else
+        {
+            Debug.Log("Not Valid");
+        }
+
         CycleItem(0, WeaponSwitchTypes.Absolute);
     }
     
@@ -54,7 +66,7 @@ public class ItemManager : MonoBehaviour
                     CurrentItemIndex = CurrentItemIndex != step ? step : CurrentItemIndex; //if new != old update, else stay as old
                 break;
             case WeaponSwitchTypes.Cycle:
-                int newIndex = CurrentItemIndex + step; //will be limited to a normalized axis input (-1 to 1)
+                int newIndex = CurrentItemIndex + -step; //will be limited to a normalized axis input (-1 to 1)
                 if (!(newIndex < ownedItems.Count && newIndex >= 0)) //if the telegraphed new index is out of bounds
                 {
                     if(newIndex < 0)
@@ -70,6 +82,7 @@ public class ItemManager : MonoBehaviour
         }
         if(CurrentItemIndex!=prevIndex)
             SwitchToNewItem();
+            HUD.GetComponent<UIController>().selectSlot(CurrentItemIndex);
     }
 
     public void SwitchToNewItem()
@@ -82,6 +95,7 @@ public class ItemManager : MonoBehaviour
         if (ownedItems.Count < maxItems)
         {
             ownedItems.Add(newItem);
+            HUD.GetComponent<UIController>().getItems();
             return true;
         }
         return false;
