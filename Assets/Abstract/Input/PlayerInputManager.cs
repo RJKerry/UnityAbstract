@@ -60,8 +60,6 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
         playerPauseController = GetComponent<PauseController>();
         playerItemManager = GetComponent<ItemManager>();
         cameraObject = GetComponentInChildren<CinemachineVirtualCamera>().gameObject;
-
-
     }
 
     /// <summary>

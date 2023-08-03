@@ -19,15 +19,28 @@ public class HealthHandler : MonoBehaviour, IDamageable
 
     public void OnDamageRecieved(float damage)
     {
-        Health -= damage;
-        if(Health < 0 ) 
+        if((Health -= damage) < 0) 
         {
             HealthDepleted();
+            return;
         }
+        DamageEffect(damage);
     }
 
-    public virtual void HealthDepleted()
+    //Extend me in children
+    public virtual void DamageEffect(float damage) 
     {
-        Debug.Log("Health 0 for " + this.gameObject.name);
+        Debug.Log(this.gameObject.name +": "+ damage + " damage recieved, " + Health + "Health Remaining");
+    }
+
+    public void HealthDepleted()
+    {
+        DeathEffect();
+    }
+
+    //Extend me in children
+    public virtual void DeathEffect()
+    {
+        Debug.Log(this.gameObject.name);
     }
 }
