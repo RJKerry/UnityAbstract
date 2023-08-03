@@ -904,7 +904,10 @@ MonoBehaviour:
   InteractingPlayer: {fileID: 0}
   TerminalCanvas: {fileID: 0}
   IDGroup: 0
+  ButtonTemplate: {fileID: 0}
   DetachBuffer: 2
+  PowerOn: event:/Terminal/PowerOn
+  PowerOff: event:/Terminal/PowerOff
 --- !u!1 &6920590396016426304
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ using TMPro;
 using UnityEditor.UIElements;
 using UnityEditor.Events;
 using UnityEngine.Events;
+using FMOD;
 
 public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalInputActions
 {
@@ -26,6 +27,10 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public GameObject ButtonTemplate;
 
     public float DetachBuffer = 2f;
+
+    public string
+        PowerOn = "event:/Terminal/PowerOn",
+        PowerOff = "event:/Terminal/DoorUnlock/PowerOff";
 
     private void Awake()
     {
@@ -54,7 +59,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         {
             if (listener.IDGroup == IDGroup)
             {
-                Debug.Log(listener.GetType());
+                UnityEngine.Debug.Log(listener.GetType());
                 ActiveListeners.Add(listener, GenerateInteractionButton(listener));
             }
         }
@@ -66,18 +71,23 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         GeneratedButtonObject.transform.SetParent(TerminalCanvas.transform, false);
         Button GeneratedButton = GeneratedButtonObject.GetComponent<Button>();
         GeneratedButton.image.sprite = listener.TerminalButtonIcon;
-        UnityEventTools.AddPersistentListener(GeneratedButton.onClick, new UnityAction(listener.OnActivated));
+        //GeneratedButton.Remove
+        //UnityEventTools.AddPersistentListener(GeneratedButton.onClick, new UnityAction(listener.OnActivated));
+
+        GeneratedButton.onClick.AddListener(listener.OnActivated);
+        
         return GeneratedButton;
     }
 
     public void OnInteract(PlayerInputManager messageSource)
     {
         messageSource.playerControls.Disable();
+        FMODUnity.RuntimeManager.PlayOneShot(PowerOn, transform.position);
         TerminalControls.TerminalInput.Enable();
         SetCameraPriority(50);
         messageSource.TeleportTo(StandPosition.transform.position);
         messageSource.canRecieveInput = false;
-        Debug.Log(gameObject.name);
+        UnityEngine.Debug.Log(gameObject.name);
         InteractingPlayer = messageSource;
     }
 
@@ -90,6 +100,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public IEnumerator EndInteract()
     {
         SetCameraPriority(0);
+        FMODUnity.RuntimeManager.PlayOneShot(PowerOff, transform.position);
         yield return new WaitForSecondsRealtime(DetachBuffer); //Prevents player moving preemptive to the camera switchback
         InteractingPlayer.canRecieveInput = true;
         InteractingPlayer = null;
@@ -98,7 +109,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public void OnExit(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if(context.performed && InteractingPlayer != null) {
-            Debug.Log(gameObject.name);
+            UnityEngine.Debug.Log(gameObject.name);
             InteractingPlayer.playerControls.Enable();
             TerminalControls.TerminalInput.Disable();
             StartCoroutine(EndInteract());

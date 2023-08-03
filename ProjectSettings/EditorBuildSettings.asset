@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 2f3992bf15832314a8dabebc0f00da3a
   - enabled: 1
-    path: Assets/Scenes/Turret Test.unity
-    guid: fce30dd988c7fe54e8c0cda1149730c8
+    path: Assets/Scenes/Level_1.unity
+    guid: 255fb5e14a30bb04f8f2646af2959b1a
+  - enabled: 1
+    path: Assets/Scenes/Level_2.unity
+    guid: 887e1012f0b2b5c4a839e6f0c0d0efc1
+  - enabled: 1
+    path: Assets/Scenes/Level_3.unity
+    guid: 56df7763630a8594baedef64292c76e3
+  - enabled: 1
+    path: Assets/Scenes/Level_4.unity
+    guid: 583a0f2a914cf3645b50e1ae30b09ddf
   m_configObjects: {}

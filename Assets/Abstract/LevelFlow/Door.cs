@@ -12,7 +12,6 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
     public bool unlocked = true;
     [SerializeField]    private bool transitioning = false;
 
-
     public float eTime, tTime = 1f; //elapsed time, target time
     public Light LockedLight, UnlockedLight;
 
