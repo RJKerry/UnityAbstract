@@ -71,7 +71,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         GeneratedButtonObject.transform.SetParent(TerminalCanvas.transform, false);
         Button GeneratedButton = GeneratedButtonObject.GetComponent<Button>();
         GeneratedButton.image.sprite = listener.TerminalButtonIcon;
-        //GeneratedButton.Remove
+
         //UnityEventTools.AddPersistentListener(GeneratedButton.onClick, new UnityAction(listener.OnActivated));
 
         GeneratedButton.onClick.AddListener(listener.OnActivated);
