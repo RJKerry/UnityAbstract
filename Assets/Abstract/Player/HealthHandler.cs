@@ -14,6 +14,11 @@ public class HealthHandler : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        Init();
+    }
+
+    public virtual void Init() 
+    {
         Health = GetMaxHealthDefault();
     }
 

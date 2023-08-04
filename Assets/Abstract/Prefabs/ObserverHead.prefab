@@ -139,7 +139,8 @@ GameObject:
   - component: {fileID: 1044847569492766622}
   - component: {fileID: 5620562854188596138}
   - component: {fileID: 576121419704218398}
-  m_Layer: 0
+  - component: {fileID: 1101505295909164181}
+  m_Layer: 2
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,6 +823,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &1101505295909164181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261684329099798329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda1fa8f884845545821eb5c0cb5b50f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 0.05
+  DamageScalar: 1
+  Player: {fileID: 0}
 --- !u!1 &3777216807442703271
 GameObject:
   m_ObjectHideFlags: 0

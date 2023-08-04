@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerManager : HealthHandler
 {
-    CapsuleCollider playerCapsule;
+    CharacterController playerCapsule;
 
-    private void Awake()
+    public override void Init()
     {
-        playerCapsule = GetComponent<CapsuleCollider>();
+        base.Init();
+        playerCapsule = GetComponent<CharacterController>();
     }
 
     public Vector3 PlayerPosition(bool AddHalfHeightToUp)
-    { return AddHalfHeightToUp ? transform.position : transform.position + Vector3.up * playerCapsule.height / 2; }
+    { return AddHalfHeightToUp ? transform.position + Vector3.up * playerCapsule.height / 2 : transform.position; }
 }

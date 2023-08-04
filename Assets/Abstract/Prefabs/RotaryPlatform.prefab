@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4110046913214893356}
   - component: {fileID: 4110046913214893359}
   - component: {fileID: 4110046913214893358}
+  - component: {fileID: 4518330800183512575}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -512,6 +513,19 @@ MonoBehaviour:
   tTime: 6.8
   transitioning: 0
   PlatformTransition: event:/Bridge/BridgeMoving
+--- !u!65 &4518330800183512575
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110046913214893344}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.016692, y: 1, z: 5.0038185}
+  m_Center: {x: -2.0083447, y: 0.5, z: -1.9985867}
 --- !u!1 &4110046914105297865
 GameObject:
   m_ObjectHideFlags: 0
