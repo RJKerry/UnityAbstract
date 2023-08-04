@@ -12,7 +12,7 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
     public bool unlocked = true;
     [SerializeField]    private bool transitioning = false;
 
-    public float eTime, tTime = 1f; //elapsed time, target time
+    public float eTime, tTime = 1f; //elapsed time, target time //Storing etime here allows for pause resume functionality
     public Light LockedLight, UnlockedLight;
 
     public int _IDGroup; //Nescesarry for anything implementing ITerminalListener - Trigger ID Group

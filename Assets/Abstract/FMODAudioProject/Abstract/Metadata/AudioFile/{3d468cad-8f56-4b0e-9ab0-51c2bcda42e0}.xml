@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{3d468cad-8f56-4b0e-9ab0-51c2bcda42e0}">
+		<property name="assetPath">
+			<value>air-hiss-102406.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.2799999999999998</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c46d41b7-d8a1-4bf9-b262-6e65c64d697f}</destination>
+		</relationship>
+	</object>
+</objects>
