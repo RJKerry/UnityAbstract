@@ -507,8 +507,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _IDGroup: 5
   _TerminalButtonIcon: {fileID: 21300000, guid: e2867fc1f5ada0e4abafa5d0cae0b576, type: 3}
+  Player: {fileID: 0}
   eTime: 0
-  tTime: 8
+  tTime: 6.8
   transitioning: 0
   PlatformTransition: event:/Bridge/BridgeMoving
 --- !u!1 &4110046914105297865
