@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, ITerminalListener, IInteractable
 {
-    public Vector3 ClosePos, OpenPos;
+    private Vector3 ClosePos;
+    public GameObject OpenPos;
 
     public bool triggered;
     public bool unlocked = true;
@@ -21,6 +22,7 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
     public Sprite _TerminalButtonIcon;
     public Sprite TerminalButtonIcon { get => _TerminalButtonIcon; set => _TerminalButtonIcon = value; }
 
+    public int OpenOffset = 3;
     public float UnlockDelay = 5f;
 
     /// <summary>
@@ -34,7 +36,6 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
     private void Awake()
     {
         ClosePos = transform.position;
-        OpenPos = transform.position+Vector3.up*3;
     }
 
     public IEnumerator OpenDoor(Vector3 StartPos, Vector3 EndPos)
@@ -63,7 +64,7 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
 
     public void OnInteract(PlayerInputManager messageSource)
     {
-        if (unlocked) StartCoroutine(OpenDoor(ClosePos, OpenPos));
+        if (unlocked) StartCoroutine(OpenDoor(ClosePos, OpenPos.transform.position));
     }
 
     public void OnActivated()
