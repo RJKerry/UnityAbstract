@@ -55,6 +55,7 @@ public class UIController : MonoBehaviour
 
     public void selectSlot(int index)
     {
+        Debug.Log("SELECTED");
         // Change the current item index in the item manager
         if (selectionBox != null)
         {

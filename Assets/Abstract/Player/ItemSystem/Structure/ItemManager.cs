@@ -36,7 +36,7 @@ public class ItemManager : MonoBehaviour
         ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY -- ALSO MAKES A BLANK OBJECT, 
         itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
         slotManager = FindObjectOfType<ItemSlotManager>();
-        HUD = GameObject.FindObjectOfType<Canvas>().gameObject;
+        HUD = GameObject.FindGameObjectWithTag("HUD");
 
         if (HUD != null)
         {
@@ -86,8 +86,12 @@ public class ItemManager : MonoBehaviour
 
     public void SwitchToNewItem()
     {
-        HUD.GetComponent<UIController>().selectSlot(CurrentItemIndex);
-        GameObject equippedItem = Instantiate(ownedItems[CurrentItemIndex], Vector3.zero, Quaternion.identity, itemSocket.transform).GameObject();
+        HUD?.GetComponent<UIController>().selectSlot(CurrentItemIndex);
+        if (ownedItems[CurrentItemIndex] != null)
+        {
+            GameObject equippedItem = Instantiate(ownedItems[CurrentItemIndex], Vector3.zero, Quaternion.identity, itemSocket.transform).GameObject();
+        }
+        
     }
 
     public bool AddItem(ItemData newItem)
