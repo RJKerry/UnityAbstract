@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : HealthHandler
@@ -9,6 +10,7 @@ public class PlayerManager : HealthHandler
     public override void Init()
     {
         base.Init();
+        DontDestroyOnLoad(this.gameObject);
         playerCapsule = GetComponent<CharacterController>();
     }
 
