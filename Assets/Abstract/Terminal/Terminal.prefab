@@ -100,7 +100,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4450986464559043046}
-  m_LocalRotation: {x: 0.08431168, y: -0.7020623, z: 0.08431168, w: 0.70206237}
+  m_LocalRotation: {x: 0.08431169, y: -0.70206237, z: 0.08431167, w: 0.70206237}
   m_LocalPosition: {x: 1, y: 1.25, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -951,6 +951,7 @@ GameObject:
   - component: {fileID: 506257527628557836}
   - component: {fileID: 7976493349930497214}
   - component: {fileID: 8132964954384941584}
+  - component: {fileID: 5407413299234107573}
   m_Layer: 5
   m_Name: TerminalCanvas
   m_TagString: Untagged
@@ -1040,6 +1041,40 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5407413299234107573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7058667489498886310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8acda66a61bbc8442a19fc1df250208c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundImage: {fileID: 6692173144479904218}
+  SpriteSequence:
+  - {fileID: -724040282, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: -731239241, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: 352186890, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: -169816566, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: -1756777344, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: 708358662, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: -1048503551, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: -1946866068, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: -1014178868, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: 141054715, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: 2107772755, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: 839764411, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: 1599646673, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: -1996346525, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: 1801273776, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: 604731120, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  - {fileID: -612445053, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
+  FrameSpeed: 1
+  currentFrameIndex: 0
+  transitioning: 0
 --- !u!1 &7894640129466857761
 GameObject:
   m_ObjectHideFlags: 0

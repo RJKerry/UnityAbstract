@@ -32,6 +32,8 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         PowerOn = "event:/Terminal/PowerOn",
         PowerOff = "event:/Terminal/DoorUnlock/PowerOff";
 
+    public TerminalCanvasController Screen;
+
     private void Awake()
     {
         TerminalControls = new PlayerControls();
@@ -49,6 +51,9 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         ButtonTemplate = Resources.Load<GameObject>("MenuAssets/ButtonGenBase");
 
         ActiveListeners = new Dictionary<ITerminalListener, Button>();
+
+        Screen = GetComponentInChildren<TerminalCanvasController>();
+
         GatherTerminalListeners();
     }
 
@@ -81,6 +86,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
     public void OnInteract(PlayerInputManager messageSource)
     {
+        Screen.Activated();
         messageSource.playerControls.Disable();
         FMODUnity.RuntimeManager.PlayOneShot(PowerOn, transform.position);
         TerminalControls.TerminalInput.Enable();
@@ -99,6 +105,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
     public IEnumerator EndInteract()
     {
+        Screen.Deactivate();
         SetCameraPriority(0);
         FMODUnity.RuntimeManager.PlayOneShot(PowerOff, transform.position);
         yield return new WaitForSecondsRealtime(DetachBuffer); //Prevents player moving preemptive to the camera switchback
