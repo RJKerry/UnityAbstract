@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,7 +6,7 @@ using UnityEngine.UI;
 
 public class TerminalCanvasController : MonoBehaviour
 {
-    public UnityEngine.UI.Image BackgroundImage;
+    public Image BackgroundImage;
 
     public List<Sprite> SpriteSequence;
 

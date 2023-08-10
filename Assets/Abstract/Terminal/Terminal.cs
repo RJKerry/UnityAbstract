@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using UnityEditor.UIElements;
-using UnityEditor.Events;
-using UnityEngine.Events;
 using FMODUnity;
 
 public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalInputActions
