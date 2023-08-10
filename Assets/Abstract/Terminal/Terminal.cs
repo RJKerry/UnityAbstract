@@ -6,35 +6,42 @@ using UnityEngine;
 using UnityEngine.UI;
 using FMODUnity;
 
+/// <summary>
+/// Terminal the functionality behind Terminal GameObjects in the world.
+/// </summary>
 public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalInputActions
 {
 
-    public CinemachineVirtualCamera TerminalCam;
-    public GameObject StandPosition;
+    public CinemachineVirtualCamera TerminalCam; //The camera position the terminal will be viewed from when used
+    public GameObject StandPosition; //A gameobject marking the position the player object should be moved to upon interacting
 
-    public PlayerControls TerminalControls;
-    public PlayerInputManager InteractingPlayer;
+    public PlayerControls TerminalControls; //Event Driven input reciever for the terminal
+    public PlayerInputManager InteractingPlayer; //The player interating, if there is one
 
-    public Canvas TerminalCanvas;
+    public Canvas TerminalCanvas; //The Screen of the Terminal, driven by
+    public TerminalCanvasController Screen; //A terminal canvas controller
+    private Dictionary<ITerminalListener, Button> ActiveListeners; //listener references and generated buttons
+    public int IDGroup = 0; //ID Groups to filter Listeners and terminals while referencing
 
-    public int IDGroup = 0;
-    private Dictionary<ITerminalListener, Button> ActiveListeners;
+    public GameObject ButtonTemplate; //The base button to generate for a listener
 
-    public GameObject ButtonTemplate;
+    public float DetachBuffer = 2f; //How long should be delayed before re-enabling the player's controls
 
-    public float DetachBuffer = 2f;
-
+    /// <summary>
+    /// Directories to FMOD sound effects
+    /// </summary>
     public string
         PowerOn = "event:/Terminal/PowerOn",
         PowerOff = "event:/Terminal/DoorUnlock/PowerOff";
-
-    public TerminalCanvasController Screen;
 
     private void Awake()
     {
         Init();
     }
 
+    /// <summary>
+    /// Base setup for terminal objects
+    /// </summary>
     private void Init()
     {
         TerminalControls = new PlayerControls();
@@ -85,13 +92,16 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         Button GeneratedButton = GeneratedButtonObject.GetComponent<Button>();
         GeneratedButton.image.sprite = listener.TerminalButtonIcon;
 
-        //UnityEventTools.AddPersistentListener(GeneratedButton.onClick, new UnityAction(listener.OnActivated));
-
         GeneratedButton.onClick.AddListener(listener.OnActivated);
         
         return GeneratedButton;
     }
 
+    /// <summary>
+    /// When the OnInteract interface Message is recieved from a valid source
+    /// Trigger Terminal intro events & pass control to the terminal
+    /// </summary>
+    /// <param name="messageSource"></param>
     public void OnInteract(PlayerInputManager messageSource)
     {
         if (InteractingPlayer != null) //Already hooked into a player? Do not register new interacts.
@@ -110,18 +120,24 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         
         messageSource.TeleportTo(StandPosition.transform.position); //Refactor to moveto
         
-        //messageSource.canRecieveInput = false;
         InteractingPlayer = messageSource;
     }
 
+    /// <summary>
+    /// Input Event from the ITerminalInputActions to trigger ending use of the terminal
+    /// </summary>
+    /// <param name="context"></param>
     public void OnExit(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if(context.performed && InteractingPlayer != null) {
-            Debug.Log(gameObject.name);
             StartCoroutine(EndInteract());
         }
     }
 
+    /// <summary>
+    /// Similar to OnInteract, except reverting control back to the player and preventing input to itself
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator EndInteract()
     {
         ClearListeners();
@@ -131,7 +147,6 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
         InteractingPlayer.playerControls.Enable();
         TerminalControls.TerminalInput.Disable();
-
 
         SetCameraPriority(0); //
 
@@ -147,6 +162,9 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         TerminalCam.Priority = priority;
     }
 
+    /// <summary>
+    /// Disposes of Listeners as the player leaves the interaction
+    /// </summary>
     private void ClearListeners()
     { 
         foreach(KeyValuePair<ITerminalListener, Button> Listener in ActiveListeners)

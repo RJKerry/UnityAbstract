@@ -4,6 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Currently used to display the terminal screen turning on and off 
+/// </summary>
 public class TerminalCanvasController : MonoBehaviour
 {
     public Image BackgroundImage;
@@ -24,6 +27,10 @@ public class TerminalCanvasController : MonoBehaviour
         StartCoroutine (ScreenTransition(true));
     }
 
+    /// <summary>
+    /// Iterates through different sprite frames either forwards or backwards, based on framespeed
+    /// </summary>
+    /// <param name="Reverse">Should a specific instance of this call cause the soritesheet to play in reverse</param>
     public IEnumerator ScreenTransition(bool Reverse)
     {
         if (transitioning)
@@ -32,10 +39,8 @@ public class TerminalCanvasController : MonoBehaviour
         int currentFrameIndex = 0;
 
         List<Sprite> sequence = new(SpriteSequence);
-        if(Reverse)
+        if (Reverse)
             sequence.Reverse();
-
-        //Debug.Log(SpriteSequence.Count);
 
         transitioning = true;
 
@@ -58,6 +63,10 @@ public class TerminalCanvasController : MonoBehaviour
         OnComplete();
     }
 
+    /// <summary>
+    /// This could be used to trigger events once the sprite sequence has completed
+    /// or anything else you could want
+    /// </summary>
     public void OnComplete()
     {
         Debug.Log("Image Sequence Complete");
