@@ -8,6 +8,15 @@ public interface IInteractable
     void OnInteract(PlayerInputManager messageSource);
 }
 
+/// <summary>
+/// IDanageable -
+/// Implement on objects that want to have health, and recieve damage
+/// 
+/// Ensures implementing classes contain:
+/// fields for a Health value,
+/// accessubke Const for base health across implementing bodies,
+/// A Method allowing for registration of damage
+/// </summary>
 public interface IDamageable
 {
     public float Health { get; set; }
@@ -15,18 +24,27 @@ public interface IDamageable
     public void OnDamageRecieved(float damage);
 }
 
+/// <summary>
+/// To Be used in turrets.
+/// </summary>
 public interface ICanBeDisabled
 {
     void OnDisableInteract();
 }
 
-//For anything that wants to be triggerable
+/// <summary>
+/// For anything that wants to be recognised as an event
+/// and activatable
+/// </summary>
 public interface IEventListener
 {
     void OnActivated();
 }
 
-//For anything that wants to appear on a terminal
+/// <summary>
+/// For anything that wants to be an event that appears on terminals, and be activated by buttons
+/// Contains graphic for buttons that can be loaded by terminals
+/// </summary>
 public interface ITerminalListener : IEventListener
 {
     public int IDGroup { get; set; } //Interface has field IDGroup, implementing classes can have ID field this hooks into
