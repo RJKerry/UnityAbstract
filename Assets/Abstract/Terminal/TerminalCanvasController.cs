@@ -27,16 +27,17 @@ public class TerminalCanvasController : MonoBehaviour
 
     public IEnumerator ScreenTransition(bool Reverse)
     {
+        if (transitioning)
+            yield return null;
+
         int currentFrameIndex = 0;
 
         List<Sprite> sequence = new(SpriteSequence);
         if(Reverse)
             sequence.Reverse();
 
-        Debug.Log(SpriteSequence.Count);
+        //Debug.Log(SpriteSequence.Count);
 
-        if (transitioning)
-            yield return null;
         transitioning = true;
 
         float ETime = 0; 
@@ -60,11 +61,6 @@ public class TerminalCanvasController : MonoBehaviour
 
     public void OnComplete()
     {
-        Debug.Log("Complete");
-    }
-
-    private void Awake()
-    {
-        //StartCoroutine(ScreenTransition(false));
+        Debug.Log("Image Sequence Complete");
     }
 }

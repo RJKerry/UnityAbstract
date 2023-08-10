@@ -908,6 +908,7 @@ MonoBehaviour:
   DetachBuffer: 2
   PowerOn: event:/Terminal/PowerOn
   PowerOff: event:/Terminal/PowerOff
+  Screen: {fileID: 0}
 --- !u!1 &6920590396016426304
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +933,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6920590396016426304}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.536, y: 0, z: 0.55799997}
+  m_LocalPosition: {x: 0.536, y: 0.3, z: 0.55799997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1073,7 +1074,6 @@ MonoBehaviour:
   - {fileID: 604731120, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
   - {fileID: -612445053, guid: e9f881ffba90e6a42bbcab0585542a7f, type: 3}
   FrameSpeed: 1
-  currentFrameIndex: 0
   transitioning: 0
 --- !u!1 &7894640129466857761
 GameObject:

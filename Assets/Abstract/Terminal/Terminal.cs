@@ -8,7 +8,7 @@ using TMPro;
 using UnityEditor.UIElements;
 using UnityEditor.Events;
 using UnityEngine.Events;
-using FMOD;
+using FMODUnity;
 
 public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalInputActions
 {
@@ -37,20 +37,24 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     private void Awake()
     {
         Init();
-
-        //GatherTerminalListeners();
     }
 
     private void Init()
     {
-        StandPosition = transform.GetChild(1).transform.gameObject;
-        TerminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
-        TerminalCanvas = GetComponentInChildren<Canvas>();
         TerminalControls = new PlayerControls();
-        TerminalCanvas.worldCamera = Camera.main; //This will work for instances in a single scene
         TerminalControls.TerminalInput.SetCallbacks(this);
+
+        TerminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
+
+        TerminalCanvas = GetComponentInChildren<Canvas>();
+        TerminalCanvas.worldCamera = Camera.main; //This will work for instances in a single scene
+        
+        StandPosition = transform.GetChild(1).transform.gameObject;
+
         ButtonTemplate = Resources.Load<GameObject>("MenuAssets/ButtonGenBase");
+
         ActiveListeners = new Dictionary<ITerminalListener, Button>();
+
         Screen = GetComponentInChildren<TerminalCanvasController>();
     }
 
@@ -66,7 +70,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         {
             if (listener.IDGroup == IDGroup)
             {
-                UnityEngine.Debug.Log(listener.GetType());
+                Debug.Log(listener.GetType());
                 ActiveListeners.Add(listener, GenerateInteractionButton(listener));
             }
         }
@@ -94,10 +98,14 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
     public void OnInteract(PlayerInputManager messageSource)
     {
-        Screen.Activated();
+        if (InteractingPlayer != null) //Already hooked into a player? Do not register new interacts.
+            return;
+
+        Screen.Activated(); //Currently a sprite sequence
+
         GatherTerminalListeners();
 
-        FMODUnity.RuntimeManager.PlayOneShot(PowerOn, transform.position);
+        RuntimeManager.PlayOneShot(PowerOn, transform.position);
 
         messageSource.playerControls.Disable();
         TerminalControls.TerminalInput.Enable();
@@ -106,16 +114,28 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         
         messageSource.TeleportTo(StandPosition.transform.position); //Refactor to moveto
         
-        messageSource.canRecieveInput = false;
+        //messageSource.canRecieveInput = false;
         InteractingPlayer = messageSource;
+    }
+
+    public void OnExit(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if(context.performed && InteractingPlayer != null) {
+            Debug.Log(gameObject.name);
+            StartCoroutine(EndInteract());
+        }
     }
 
     public IEnumerator EndInteract()
     {
-        Screen.Deactivate();
         ClearListeners();
+        Screen.Deactivate();
+        
+        RuntimeManager.PlayOneShot(PowerOff, transform.position);
 
-        FMODUnity.RuntimeManager.PlayOneShot(PowerOff, transform.position);
+        InteractingPlayer.playerControls.Enable();
+        TerminalControls.TerminalInput.Disable();
+
 
         SetCameraPriority(0); //
 
@@ -123,6 +143,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
         InteractingPlayer.canRecieveInput = true;
         InteractingPlayer = null;
+        
     }
 
     public void SetCameraPriority(int priority)
@@ -134,29 +155,20 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     { 
         foreach(KeyValuePair<ITerminalListener, Button> Listener in ActiveListeners)
         {
-            Destroy(Listener.Value);
+            Destroy(Listener.Value.gameObject); //Destroy the GameObject with Button Component
         }
-    }
-
-    public void OnExit(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        if(context.performed && InteractingPlayer != null) {
-            UnityEngine.Debug.Log(gameObject.name);
-            InteractingPlayer.playerControls.Enable();
-            TerminalControls.TerminalInput.Disable();
-            StartCoroutine(EndInteract());
-        }
+        ActiveListeners.Clear();
     }
 
     #region Input Enable/Disable
     private void OnEnable()
     {
-        TerminalControls.Disable();
+        TerminalControls.Enable();
     }
 
     private void OnDisable()
     {
-        OnEnable();
+        TerminalControls.Disable();
     }
     #endregion
 }
