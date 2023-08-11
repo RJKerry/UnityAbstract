@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class ObserverPlayerDetector : MonoBehaviour
+public class OverseerPlayerDetector : MonoBehaviour
 {
     public float Damage = 0.005f, DamageScalar = 1f;
 
