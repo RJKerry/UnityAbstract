@@ -39,7 +39,7 @@ public interface IEventListener
 /// </summary>
 public interface IOverseerListener : IEventListener
 {
-    // void OnOverseerPing(PlayerManager player); <-UNCOMMENT ME ON TURRET COMPLETE
+     void OnOverseerPing(PlayerManager player);
 }
 
 /// <summary>
@@ -47,7 +47,7 @@ public interface IOverseerListener : IEventListener
 /// </summary>
 public interface ICanBeDisabled
 {
-    //void OnDisable(); <-- UNCONMMENT FOR TURRET
+     void OnDisable();
 }
 
 /// <summary>
