@@ -47,7 +47,7 @@ public interface IOverseerListener : IEventListener
 /// </summary>
 public interface ICanBeDisabled
 {
-    void OnDisable();
+    //void OnDisable(); <-- UNCONMMENT FOR TURRET
 }
 
 /// <summary>

@@ -31,8 +31,8 @@ public class OverseerPlayerDetector : MonoBehaviour
             if(CanDoDamage) 
                 StartCoroutine(ApplyDamage());
 
-            GatherTurrets();
-            UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
+            //GatherTurrets();
+            //UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
         }
     }
 
@@ -71,14 +71,14 @@ public class OverseerPlayerDetector : MonoBehaviour
         if (other.gameObject == Player.gameObject) 
         { 
             Player = null;
-            UpdateTurrets(true); //This will clear the player val of turrets referenced by this script
+            //UpdateTurrets(true); //This will clear the player val of turrets referenced by this script
         }
     }
 
     /// <summary>
     /// References all turrets and compares ID's, stores a reference if the ID is valid (easy object grouping)
     /// </summary>
-    private void GatherTurrets()
+/*    private void GatherTurrets()
     {
         var turrets = FindObjectsOfType<Turret>().OfType<IOverseerListener>();
         foreach (IOverseerListener currentTurret in turrets)
@@ -97,5 +97,6 @@ public class OverseerPlayerDetector : MonoBehaviour
 
             turret.OnOverseerPing(clear ? null : Player); //returns null to overwrite player ref in Turret
         }
-    }
+    }*/
+//Uncomment block above on turret complete
 }
