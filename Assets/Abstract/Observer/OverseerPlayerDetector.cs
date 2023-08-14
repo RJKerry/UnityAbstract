@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class OverseerPlayerDetector : MonoBehaviour
 {
-    public float Damage = 0.005f, DamageScalar = 1f;
+    public const float DAMAGE_BASE = 0.005f;
+    public float DamageScalar = 1f;
 
     float DamageBufferTime = 0.25f;
 
@@ -17,7 +19,7 @@ public class OverseerPlayerDetector : MonoBehaviour
     bool CanDoDamage = true;
 
     public int TurretIDGroup = 0;
-    public List<Turret> Turrets;
+    public List<IOverseerListener> Turrets;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,7 +27,11 @@ public class OverseerPlayerDetector : MonoBehaviour
         if (manager != null)
         {
             Player = manager;
-            StartCoroutine(ApplyDamage());
+
+            if(CanDoDamage) 
+                StartCoroutine(ApplyDamage());
+
+            GatherTurrets();
             UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
         }
     }
@@ -46,7 +52,7 @@ public class OverseerPlayerDetector : MonoBehaviour
                 if (HitObject.transform.GetComponent<PlayerManager>() == Player)
                 {
                     CanDoDamage = false;
-                    Player.OnDamageRecieved(Damage * DamageScalar);
+                    Player.OnDamageRecieved(DAMAGE_BASE * DamageScalar);
                     yield return new WaitForSecondsRealtime(DamageBufferTime);
                     StartCoroutine(ApplyDamage());
                     CanDoDamage = true;
@@ -74,20 +80,22 @@ public class OverseerPlayerDetector : MonoBehaviour
     /// </summary>
     private void GatherTurrets()
     {
-        Turret[] turrets = FindObjectsOfType<Turret>();
-        foreach (Turret currentTurret in turrets)
+        var turrets = FindObjectsOfType<Turret>().OfType<IOverseerListener>();
+        foreach (IOverseerListener currentTurret in turrets)
         {
-            if (currentTurret.ID == TurretIDGroup)
+            if (currentTurret.IDGroup == TurretIDGroup)
                 Turrets.Add(currentTurret);
         }
     }
 
-    void UpdateTurrets(bool clear)
+    private void UpdateTurrets(bool clear)
     {
-        foreach (Turret turret in Turrets)
+        foreach (IOverseerListener turret in Turrets)
         {
-            turret.PassPlayerRef(clear ? null : Player);
+            if (clear)
+                Turrets.Clear();
+
+            turret.OnOverseerPing(clear ? null : Player); //returns null to overwrite player ref in Turret
         }
     }
-
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObserverController : MonoBehaviour, ITerminalListener
+public class OverseerController : MonoBehaviour, ITerminalListener
 {
     public OverseerViewTargeter ViewTargeter;
     public CinemachineVirtualCamera OverseerView;
@@ -31,15 +31,5 @@ public class ObserverController : MonoBehaviour, ITerminalListener
     {
         ViewTargeter = GetComponentInChildren<OverseerViewTargeter>();
         OverseerView = GetComponentInChildren<CinemachineVirtualCamera>();
-    }
-
-
-
-    private void PingTurrets()
-    {
-        foreach (Turret currentTurret in Turrets)
-        {
-
-        }
     }
 }
