@@ -41,12 +41,17 @@ public class OverseerPlayerDetector : MonoBehaviour
         RayOrigin = transform.parent;
     }
 
+    /// <summary>
+    /// Performs a check that the player is within line of sight
+    /// if so, apply damage using the OnDamageRecieved method
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator ApplyDamage()
     {
         if (CanDoDamage && Player != null)
         {
             RaycastHit HitObject;
-            Debug.DrawRay(RayOrigin.position, Player.PlayerPosition(true) - RayOrigin.position, Color.red);
+            //Debug.DrawRay(RayOrigin.position, Player.PlayerPosition(true) - RayOrigin.position, Color.red);
             if (Physics.Raycast(RayOrigin.position, Player.PlayerPosition(true) - RayOrigin.position, out HitObject))
             {
                 if (HitObject.transform.GetComponent<PlayerManager>() == Player)
@@ -54,8 +59,8 @@ public class OverseerPlayerDetector : MonoBehaviour
                     CanDoDamage = false;
                     Player.OnDamageRecieved(DAMAGE_BASE * DamageScalar);
                     yield return new WaitForSecondsRealtime(DamageBufferTime);
-                    StartCoroutine(ApplyDamage());
                     CanDoDamage = true;
+                    StartCoroutine(ApplyDamage());
                 }
                 else
                 {
