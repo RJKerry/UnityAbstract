@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{08ad322b-e798-447a-bc18-a56a91d5eff4}">
+		<property name="assetPath">
+			<value>cinematic-alarm-hit-14580.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>5.0640000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{c46d41b7-d8a1-4bf9-b262-6e65c64d697f}</destination>
+		</relationship>
+	</object>
+</objects>
