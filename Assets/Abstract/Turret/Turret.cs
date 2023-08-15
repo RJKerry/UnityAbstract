@@ -5,12 +5,18 @@ using UnityEngine;
 public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
 {
     public int IDGroup { get; set; }
+    public GameObject bulletPrefab;
+    [Range(0f, 100f)]
+    public int bulletSpeed;
+    [Range(0f, 1000f)]
+    public int rotationSpeed;
     private Transform pivot;
+    private Transform barrel;
     private PlayerManager currentPlayer;
     private Coroutine trackingCoroutine;
 
     private int coroutineTriggerCounter = 0; 
-    private int raycastTriggerThreshold = 5;
+    private int raycastTriggerThreshold = 12;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +24,7 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
 
 
         pivot = gameObject.transform.Find("Pivot");
+        barrel = pivot.GetChild(0).transform.Find("Barrel");
 
         // Validity check on pivot
         if (pivot == null)
@@ -83,10 +90,10 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
             if (coroutineTriggerCounter >= raycastTriggerThreshold)
             {
                 coroutineTriggerCounter = 0; // Reset the counter
-                FireRaycast(); // Fire the raycast
+                FireShot(); // Fire the raycast
             }
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSecondsRealtime(0.02f);
         }
     }
 
@@ -96,23 +103,59 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
     private void TrackPlayer(PlayerManager player)
     {
         Vector3 playerPositionWithoutY = new Vector3(player.transform.position.x, pivot.position.y, player.transform.position.z);
-        pivot.LookAt(2 * pivot.position - playerPositionWithoutY, Vector3.up);
+
+        // Calculate the target rotation to look at the player
+        Quaternion targetRotation = Quaternion.LookRotation(pivot.position - playerPositionWithoutY);
+
+        // Smoothly rotate towards the target rotation
+        pivot.rotation = Quaternion.RotateTowards(pivot.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
+
 
     // FireRaycast is called by the TrackPlayerCoroutine
     // its purpose is to fire a raycast at the player
-    private void FireRaycast()
+    private void FireShot()
     {
         // Perform the raycast logic here
         RaycastHit hit;
         if (Physics.Raycast(pivot.position, pivot.forward * -1, out hit))
         {
             Debug.Log("Hit: " + hit.collider.gameObject.name);
+
+            // Calculate the direction from the barrel to the hit point
+            Vector3 bulletDirection = hit.point - barrel.position;
+
+            // Calculate the rotation needed for the bullet to face the hit point
+            Quaternion bulletRotation = Quaternion.LookRotation(bulletDirection);
+
+            // Instantiate the bullet prefab and set its initial position and rotation
+            GameObject bullet = Instantiate(bulletPrefab, barrel.position + bulletDirection.normalized, bulletRotation);
+
+            // Get the Rigidbody component from the instantiated bullet
+            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+
+            // Set the bullet's initial velocity to move it forward
+            bulletRigidbody.velocity = bulletDirection.normalized * bulletSpeed; // Adjust the bulletSpeed as needed
+
+
+
+            // Check if the hit object is the player
             if (hit.collider.gameObject == currentPlayer.gameObject)
             {
                 Debug.Log("Player is in sight");
+                // Run the damage() logic here
+                DamagePlayer(hit.collider.gameObject);
             }
         }
+    }
+
+
+    // Function to apply damage to the player
+    private void DamagePlayer(GameObject player)
+    {
+        return;
+        // Add your damage logic here
+        // For example: player.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
     }
 
 
