@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
+using FMODUnity;
 
 public class OverseerPlayerDetector : MonoBehaviour
 {
@@ -21,14 +22,18 @@ public class OverseerPlayerDetector : MonoBehaviour
     public int TurretIDGroup = 0;
     public List<IOverseerListener> Turrets;
 
+    public string
+        PlayerSeen = "event:/Overseer/PlayerSeen";
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerManager manager = other.gameObject.GetComponent<PlayerManager>();
         if (manager != null)
         {
             Player = manager;
+            RuntimeManager.PlayOneShot(PlayerSeen, transform.position);
 
-            if(CanDoDamage) 
+            if (CanDoDamage) 
                 StartCoroutine(ApplyDamage());
 
             //GatherTurrets();
@@ -76,14 +81,14 @@ public class OverseerPlayerDetector : MonoBehaviour
         if (other.gameObject == Player.gameObject) 
         { 
             Player = null;
-            //UpdateTurrets(true); //This will clear the player val of turrets referenced by this script
+            UpdateTurrets(true); //This will clear the player val of turrets referenced by this script
         }
     }
 
     /// <summary>
     /// References all turrets and compares ID's, stores a reference if the ID is valid (easy object grouping)
     /// </summary>
-/*    private void GatherTurrets()
+    private void GatherTurrets()
     {
         var turrets = FindObjectsOfType<Turret>().OfType<IOverseerListener>();
         foreach (IOverseerListener currentTurret in turrets)
@@ -102,6 +107,6 @@ public class OverseerPlayerDetector : MonoBehaviour
 
             turret.OnOverseerPing(clear ? null : Player); //returns null to overwrite player ref in Turret
         }
-    }*/
-//Uncomment block above on turret complete
+    }
+    //Uncomment block above on turret complete
 }
