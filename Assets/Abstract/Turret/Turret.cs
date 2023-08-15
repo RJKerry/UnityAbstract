@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
 {
-    public int IDGroup { get; set; }
+    public int _IDGroup;
+    public int IDGroup { get => _IDGroup; set => _IDGroup = value; }
     public GameObject bulletPrefab;
     [Range(0f, 100f)]
     public int bulletSpeed;
     [Range(0f, 1000f)]
     public int rotationSpeed;
-    private Transform pivot;
+    private Transform pivot;    
     private Transform barrel;
     private PlayerManager currentPlayer;
     private Coroutine trackingCoroutine;
@@ -21,8 +22,6 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
     // Start is called before the first frame update
     void Start()
     {
-
-
         pivot = gameObject.transform.Find("Pivot");
         barrel = pivot.GetChild(0).transform.Find("Barrel");
 
@@ -30,6 +29,12 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
         if (pivot == null)
         {
             Debug.LogError("Turret has no pivot");
+        }
+
+        // Validity check on barrel
+        if (barrel == null)
+        {
+            Debug.LogError("Turret has no barrel");
         }
 
     }
