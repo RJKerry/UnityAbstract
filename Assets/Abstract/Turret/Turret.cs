@@ -32,10 +32,6 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
             Debug.LogError("Turret has no pivot");
         }
 
-
-        PlayerManager player = GameObject.Find("Player").GetComponent<PlayerManager>(); // TEST CODE
-        OnOverseerPing(player); // TEST CODE
-
     }
 
 
@@ -120,7 +116,6 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
         RaycastHit hit;
         if (Physics.Raycast(pivot.position, pivot.forward * -1, out hit))
         {
-            Debug.Log("Hit: " + hit.collider.gameObject.name);
 
             // Calculate the direction from the barrel to the hit point
             Vector3 bulletDirection = hit.point - barrel.position;
@@ -136,26 +131,7 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
 
             // Set the bullet's initial velocity to move it forward
             bulletRigidbody.velocity = bulletDirection.normalized * bulletSpeed; // Adjust the bulletSpeed as needed
-
-
-
-            // Check if the hit object is the player
-            if (hit.collider.gameObject == currentPlayer.gameObject)
-            {
-                Debug.Log("Player is in sight");
-                // Run the damage() logic here
-                DamagePlayer(hit.collider.gameObject);
-            }
         }
-    }
-
-
-    // Function to apply damage to the player
-    private void DamagePlayer(GameObject player)
-    {
-        return;
-        // Add your damage logic here
-        // For example: player.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
     }
 
 

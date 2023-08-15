@@ -5,7 +5,7 @@ using FMODUnity;
 
 public class Bullet : MonoBehaviour
 {
-
+    // Sound for laser
     public string
     BulletFired = "event:/Turret/BulletFired";
 
