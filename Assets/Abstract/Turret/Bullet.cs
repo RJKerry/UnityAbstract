@@ -1,12 +1,19 @@
 using UnityEngine;
 using System.Collections;
+using FMODUnity;
+
 
 public class Bullet : MonoBehaviour
 {
+
+    public string
+    BulletFired = "event:/Turret/BulletFired";
+
     private void Start()
     {
         // Start the coroutine to destroy the bullet after x seconds
         StartCoroutine(DestroyAfterDelay(3f));
+        RuntimeManager.PlayOneShot(BulletFired, transform.position);
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -15,8 +22,7 @@ public class Bullet : MonoBehaviour
         IDamageable damageableObj = collision.gameObject.GetComponent<IDamageable>();
         if (damageableObj != null)
         {
-            Debug.Log("Player hit by bullet");
-            damageableObj.OnDamageRecieved(1f);
+            damageableObj.OnDamageRecieved(0.2f);
         }
 
         // Destroy the bullet when it hits something
