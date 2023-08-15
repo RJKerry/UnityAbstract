@@ -36,8 +36,8 @@ public class OverseerPlayerDetector : MonoBehaviour
             if (CanDoDamage) 
                 StartCoroutine(ApplyDamage());
 
-            //GatherTurrets();
-            //UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
+            GatherTurrets();
+            UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
         }
     }
 
