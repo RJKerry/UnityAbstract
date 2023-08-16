@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+
 using FMODUnity;
 
 /// <summary>
@@ -15,7 +16,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public CinemachineVirtualCamera TerminalCam; //The camera position the terminal will be viewed from when used
     public GameObject StandPosition; //A gameobject marking the position the player object should be moved to upon interacting
 
-    public PlayerControls TerminalControls; //Event Driven input reciever for the terminal
+    private PlayerControls TerminalControls; //Event Driven input reciever for the terminal
     public PlayerInputManager InteractingPlayer; //The player interating, if there is one
 
     public Canvas TerminalCanvas; //The Screen of the Terminal, driven by
@@ -40,25 +41,63 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     }
 
     /// <summary>
-    /// Base setup for terminal objects
+    /// Base setup for terminal object and its respective components
     /// </summary>
     private void Init()
     {
-        TerminalControls = new PlayerControls();
-        TerminalControls.TerminalInput.SetCallbacks(this);
-
         TerminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
+        if (TerminalCam == null)
+            Debug.LogError("No CinemachineVirtualCamera found in object children");
+
+        TerminalCanvas.worldCamera = Camera.main; //This will work for instances in a single scene
+        if (TerminalCanvas.worldCamera == null)
+            Debug.LogError("Terminal has not found a camear to hook; buttons will not respond to mouse input");
 
         TerminalCanvas = GetComponentInChildren<Canvas>();
-        TerminalCanvas.worldCamera = Camera.main; //This will work for instances in a single scene
-        
-        StandPosition = transform.GetChild(1).transform.gameObject;
-
-        ButtonTemplate = Resources.Load<GameObject>("MenuAssets/ButtonGenBase");
-
-        ActiveListeners = new Dictionary<ITerminalListener, Button>();
+        if (TerminalCanvas == null)
+            Debug.LogError("Terminals Should have a canvas within its children");
 
         Screen = GetComponentInChildren<TerminalCanvasController>();
+        if (Screen == null)
+            Debug.LogError("Terminal should have a TerminalCanvasController");
+
+        StandPosition = transform.Find("StandPosition").gameObject;
+        if (StandPosition == null)
+            Debug.LogError("Terminal should have a child named StandPosition");
+
+        ButtonTemplate = Resources.Load<GameObject>("MenuAssets/ButtonGenBase");
+        if (ButtonTemplate == null)
+            Debug.LogError("No base button prefab found in resources");
+
+        TerminalControls = new PlayerControls();
+        TerminalControls.TerminalInput.SetCallbacks(this);
+        ActiveListeners = new Dictionary<ITerminalListener, Button>();
+    }
+
+    /// <summary>
+    /// When the OnInteract interface Message is recieved from a valid source
+    /// Trigger Terminal intro events & pass control to the terminal
+    /// </summary>
+    /// <param name="messageSource"></param>
+    public void OnInteract(PlayerInputManager messageSource)
+    {
+        if (InteractingPlayer != null) //Already hooked into a player? Do not register new interacts.
+            return;
+
+        Screen.Activated(); //Currently a sprite sequence
+
+        GatherTerminalListeners();
+
+        RuntimeManager.PlayOneShot(PowerOn, transform.position);
+
+        messageSource.playerControls.Disable();
+        TerminalControls.TerminalInput.Enable();
+
+        SetCameraPriority(50);
+
+        messageSource.TeleportTo(StandPosition.transform.position); //Refactor to smooth moveto
+
+        InteractingPlayer = messageSource;
     }
 
     /// <summary>
@@ -97,31 +136,6 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         return GeneratedButton;
     }
 
-    /// <summary>
-    /// When the OnInteract interface Message is recieved from a valid source
-    /// Trigger Terminal intro events & pass control to the terminal
-    /// </summary>
-    /// <param name="messageSource"></param>
-    public void OnInteract(PlayerInputManager messageSource)
-    {
-        if (InteractingPlayer != null) //Already hooked into a player? Do not register new interacts.
-            return;
-
-        Screen.Activated(); //Currently a sprite sequence
-
-        GatherTerminalListeners();
-
-        RuntimeManager.PlayOneShot(PowerOn, transform.position);
-
-        messageSource.playerControls.Disable();
-        TerminalControls.TerminalInput.Enable();
-
-        SetCameraPriority(50);
-        
-        messageSource.TeleportTo(StandPosition.transform.position); //Refactor to moveto
-        
-        InteractingPlayer = messageSource;
-    }
 
     /// <summary>
     /// Input Event from the ITerminalInputActions to trigger ending use of the terminal
@@ -154,7 +168,6 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
 
         InteractingPlayer.canRecieveInput = true;
         InteractingPlayer = null;
-        
     }
 
     public void SetCameraPriority(int priority)
