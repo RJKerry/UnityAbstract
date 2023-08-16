@@ -9,10 +9,12 @@ public class PlayerManager : HealthHandler
     CharacterController playerCapsule;
     private string lastSceneName;
     private string DeathScene;
+    private GameObject DeathReloadData;
     public override void Init()
     {
-        DeathScene = "Death";
         base.Init();
+        DeathScene = "Death";
+        DeathReloadData = Resources.Load<GameObject>("DeathScreenLoadPackage");
         playerCapsule = GetComponent<CharacterController>();
     }
 
@@ -28,19 +30,18 @@ public class PlayerManager : HealthHandler
 
     public override void DeathEffect()
     {
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
         lastSceneName = SceneManager.GetActiveScene().name;
-        StartCoroutine(loadDeathScene());
+        StartCoroutine(LoadDeathScene());
     }
 
-    public async IEnumerator loadDeathScene()
+    public IEnumerator LoadDeathScene()
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(DeathScene);
+        DeathReload reloadObj = Instantiate(DeathReloadData).GetComponent<DeathReload>();
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-
     }
-
 }
