@@ -128,20 +128,25 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
         if (Physics.Raycast(pivot.position, pivot.forward * -1, out hit))
         {
 
-            // Calculate the direction from the barrel to the hit point
-            Vector3 bulletDirection = hit.point - barrel.position;
+            if (hit.collider.gameObject == currentPlayer.gameObject)
+            {
+                // Calculate the direction from the barrel to the hit point
+                Vector3 bulletDirection = hit.point - barrel.position;
 
-            // Calculate the rotation needed for the bullet to face the hit point
-            Quaternion bulletRotation = Quaternion.LookRotation(bulletDirection);
+                // Calculate the rotation needed for the bullet to face the hit point
+                Quaternion bulletRotation = Quaternion.LookRotation(bulletDirection);
 
-            // Instantiate the bullet prefab and set its initial position and rotation
-            GameObject bullet = Instantiate(bulletPrefab, barrel.position + bulletDirection.normalized, bulletRotation);
+                // Instantiate the bullet prefab and set its initial position and rotation
+                GameObject bullet = Instantiate(bulletPrefab, barrel.position + bulletDirection.normalized, bulletRotation);
 
-            // Get the Rigidbody component from the instantiated bullet
-            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+                // Get the Rigidbody component from the instantiated bullet
+                Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
 
-            // Set the bullet's initial velocity to move it forward
-            bulletRigidbody.velocity = bulletDirection.normalized * bulletSpeed; // Adjust the bulletSpeed as needed
+                // Set the bullet's initial velocity to move it forward
+                bulletRigidbody.velocity = bulletDirection.normalized * bulletSpeed; // Adjust the bulletSpeed as needed
+            }
+
+
         }
     }
 
