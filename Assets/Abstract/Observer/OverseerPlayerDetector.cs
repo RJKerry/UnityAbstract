@@ -24,7 +24,8 @@ public class OverseerPlayerDetector : MonoBehaviour
     public bool hasTurrets = false;
 
     public string
-        PlayerSeen = "event:/Overseer/PlayerSeen";
+        PlayerSeen = "event:/Overseer/PlayerSeen",
+        PlayerLost = "event:/Overseer/PlayerLost";
 
     public OverseerViewTargeter viewTargeter;
     float playerTrackDuration = 3f;
@@ -35,7 +36,6 @@ public class OverseerPlayerDetector : MonoBehaviour
         if (manager != null)
         {
             Player = manager;
-
 
             RuntimeManager.PlayOneShot(PlayerSeen, transform.position);
 
@@ -97,7 +97,8 @@ public class OverseerPlayerDetector : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == Player.gameObject) 
-        { 
+        {
+            RuntimeManager.PlayOneShotAttached(PlayerLost, transform.root.gameObject);
             Player = null;
             if(hasTurrets) UpdateTurrets(true); //This will clear the player val of turrets referenced by this script
         }
