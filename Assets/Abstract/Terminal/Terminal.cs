@@ -45,22 +45,19 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     /// </summary>
     private void Init()
     {
-        TerminalControls = new PlayerControls();
-        TerminalControls.TerminalInput.SetCallbacks(this);
-
         TerminalCam = GetComponentInChildren<CinemachineVirtualCamera>();
         if (TerminalCam == null)
             Debug.LogError("No CinemachineVirtualCamera found in object children");
-
-        TerminalCanvas = GetComponentInChildren<Canvas>();
-        if (TerminalCanvas == null)
-            Debug.LogError("Terminals Should have a canvas within its children");
 
         TerminalCanvas.worldCamera = Camera.main; //This will work for instances in a single scene
         if (TerminalCanvas.worldCamera == null)
             Debug.LogError("Terminal has not found a camear to hook; buttons will not respond to mouse input");
 
-        Screen = TerminalCanvas.gameObject.GetComponent<TerminalCanvasController>();
+        TerminalCanvas = GetComponentInChildren<Canvas>();
+        if (TerminalCanvas == null)
+            Debug.LogError("Terminals Should have a canvas within its children");
+
+        Screen = GetComponentInChildren<TerminalCanvasController>();
         if (Screen == null)
             Debug.LogError("Terminal should have a TerminalCanvasController");
 
@@ -72,6 +69,8 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         if (ButtonTemplate == null)
             Debug.LogError("No base button prefab found in resources");
 
+        TerminalControls = new PlayerControls();
+        TerminalControls.TerminalInput.SetCallbacks(this);
         ActiveListeners = new Dictionary<ITerminalListener, Button>();
     }
 
