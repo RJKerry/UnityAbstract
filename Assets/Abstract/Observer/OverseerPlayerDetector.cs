@@ -21,6 +21,7 @@ public class OverseerPlayerDetector : MonoBehaviour
 
     public int TurretIDGroup = 0;
     public List<IOverseerListener> Turrets;
+    public bool hasTurrets = false;
 
     public string
         PlayerSeen = "event:/Overseer/PlayerSeen";
@@ -36,8 +37,11 @@ public class OverseerPlayerDetector : MonoBehaviour
             if (CanDoDamage) 
                 StartCoroutine(ApplyDamage());
 
-            GatherTurrets();
-            UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
+            if(Turrets != null)
+                UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
+           
+             //if its null nothing will happen else it will be cleared
+            GatherTurrets(); //hence only updating needs to fall within the check. GatherTurrets will just return null
         }
     }
 
@@ -91,6 +95,10 @@ public class OverseerPlayerDetector : MonoBehaviour
     private void GatherTurrets()
     {
         var turrets = FindObjectsOfType<Turret>().OfType<IOverseerListener>();
+        
+        if(turrets == null)
+            return;
+
         foreach (IOverseerListener currentTurret in turrets)
         {
             if (currentTurret.IDGroup == TurretIDGroup)
@@ -98,15 +106,21 @@ public class OverseerPlayerDetector : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Pings turrets to update player ref based on detection,
+    /// clears the array if cutting off / clearing player refs
+    /// </summary>
+    /// <param name="clear"></param>
     private void UpdateTurrets(bool clear)
     {
-        foreach (IOverseerListener turret in Turrets)
-        {
-            if (clear)
-                Turrets.Clear();
+        if (Turrets == null) //no turrets? nothing to clear, nothing to update.
+            return;
 
-            turret.OnOverseerPing(clear ? null : Player); //returns null to overwrite player ref in Turret
+        foreach (IOverseerListener turret in Turrets) //send out messages
+        {
+            turret.OnOverseerPing(clear ? null : Player); //returns null to overwrite player ref in turrets - important for turret functionality
         }
+        if (clear) //dispose of all turrets
+            Turrets.Clear();
     }
-    //Uncomment block above on turret complete
 }
