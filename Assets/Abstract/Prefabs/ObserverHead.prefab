@@ -840,6 +840,8 @@ MonoBehaviour:
   TurretIDGroup: 0
   hasTurrets: 0
   PlayerSeen: event:/Overseer/PlayerSeen
+  PlayerLost: event:/Overseer/PlayerLost
+  viewTargeter: {fileID: 0}
 --- !u!1 &3777216807442703271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1106,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 0
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 3852118382999856569}
   m_Follow: {fileID: 0}
@@ -1361,6 +1363,7 @@ MonoBehaviour:
   tTime: 1
   Active: 1
   selectorType: 0
+  tracking: 0
 --- !u!1 &3852118384329199108
 GameObject:
   m_ObjectHideFlags: 0

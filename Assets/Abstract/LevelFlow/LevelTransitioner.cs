@@ -17,7 +17,7 @@ public class LevelTransitioner : MonoBehaviour
         StartCoroutine(LoadNewScene(NextSceneIndex, loadMode));
     }
 
-    private IEnumerator LoadNewScene(int newSceneIndex, LoadSceneMode loadMode)
+    protected IEnumerator LoadNewScene(int newSceneIndex, LoadSceneMode loadMode)
     { 
         //DontDestroyOnLoad(this.transform.parent);
         AsyncOperation levelLoad = SceneManager.LoadSceneAsync(NextSceneIndex, loadMode);

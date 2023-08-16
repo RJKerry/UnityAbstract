@@ -125,7 +125,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 0
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 6920590394704710538}
   m_Follow: {fileID: 0}
@@ -903,12 +903,12 @@ MonoBehaviour:
   StandPosition: {fileID: 0}
   InteractingPlayer: {fileID: 0}
   TerminalCanvas: {fileID: 0}
+  Screen: {fileID: 0}
   IDGroup: 0
   ButtonTemplate: {fileID: 0}
   DetachBuffer: 2
   PowerOn: event:/Terminal/PowerOn
   PowerOff: event:/Terminal/PowerOff
-  Screen: {fileID: 0}
 --- !u!1 &6920590396016426304
 GameObject:
   m_ObjectHideFlags: 0
