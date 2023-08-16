@@ -10,9 +10,7 @@ public class Bullet : MonoBehaviour
     BulletFired = "event:/Turret/BulletFired";
 
     private void Start()
-    {
-
-        Debug.Log("Bullet Fired");
+    {;
 
         // Start the coroutine to destroy the bullet after x seconds
         StartCoroutine(DestroyAfterDelay(3f));
@@ -26,11 +24,10 @@ public class Bullet : MonoBehaviour
         if (damageableObj != null)
         {
             damageableObj.OnDamageRecieved(0.2f);
+            Destroy(gameObject);
         }
 
         // Destroy the bullet when it hits something
-        Destroy(gameObject);
-        Debug.Log("Bullet Destroyed");
     }
 
     private IEnumerator DestroyAfterDelay(float delay)
@@ -38,14 +35,8 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSecondsRealtime(delay);
         // Destroy the bullet after the specified delay
         Destroy(gameObject);
-        Debug.Log("Bullet Destroyed");
     }
 
-    private void DamagePlayer(GameObject player)
-    {
-        return;
-        // Implement your damage logic here
-    }
 }
 
 
