@@ -45,10 +45,10 @@ public class OverseerPlayerDetector : MonoBehaviour
             if (hasTurrets)
             {
                 print("Overseer: " + transform.root.name + " has turrets enabled");
-                if (Turrets != null)
-                    UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
+                //Turrets can try and see the player - this passes a referenece to the turrets to enable them
 
                 GatherTurrets();
+                UpdateTurrets(false);
             }
              //if its null nothing will happen else it will be cleared
             //if(hasTurrets) GatherTurrets(); //hence only updating needs to fall within the check. GatherTurrets will just return null
@@ -117,6 +117,7 @@ public class OverseerPlayerDetector : MonoBehaviour
         foreach (IOverseerListener currentTurret in turrets)
         {
             if (currentTurret.IDGroup == TurretIDGroup)
+                Debug.Log(currentTurret);
                 Turrets.Add(currentTurret);
         }
     }
@@ -133,9 +134,15 @@ public class OverseerPlayerDetector : MonoBehaviour
 
         foreach (IOverseerListener turret in Turrets) //send out messages
         {
+            Debug.Log("Hitting Turrets");
             turret.OnOverseerPing(clear ? null : Player); //returns null to overwrite player ref in turrets - important for turret functionality
         }
-        if (clear) //dispose of all turrets
+        if (clear)
+        {
+            Debug.Log("Clearing Turrets");
             Turrets.Clear();
+
+        } //dispose of all turrets
+            
     }
 }

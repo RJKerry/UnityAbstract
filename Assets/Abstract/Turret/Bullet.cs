@@ -11,6 +11,9 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+
+        Debug.Log("Bullet Fired");
+
         // Start the coroutine to destroy the bullet after x seconds
         StartCoroutine(DestroyAfterDelay(3f));
         RuntimeManager.PlayOneShot(BulletFired, transform.position);
@@ -27,6 +30,7 @@ public class Bullet : MonoBehaviour
 
         // Destroy the bullet when it hits something
         Destroy(gameObject);
+        Debug.Log("Bullet Destroyed");
     }
 
     private IEnumerator DestroyAfterDelay(float delay)
@@ -34,6 +38,7 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSecondsRealtime(delay);
         // Destroy the bullet after the specified delay
         Destroy(gameObject);
+        Debug.Log("Bullet Destroyed");
     }
 
     private void DamagePlayer(GameObject player)

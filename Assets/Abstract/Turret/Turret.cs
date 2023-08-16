@@ -22,6 +22,7 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
     // Start is called before the first frame update
     void Start()
     {
+        bulletPrefab = Resources.Load("Bullets/Bullet") as GameObject;
         pivot = gameObject.transform.Find("Pivot");
         barrel = pivot.GetChild(0).transform.Find("Barrel");
 
@@ -37,6 +38,7 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
             Debug.LogError("Turret has no barrel");
         }
 
+
     }
 
 
@@ -51,17 +53,11 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
 
     public void OnOverseerPing(PlayerManager player)
     {
+
+        Debug.Log("Turret has detected player");
+
         // Set the current player to the player that entered the trigger if it is not null
-        if (player != null)
-        {
-            currentPlayer = player;
-            // Start the coroutine if it is not already running
-            if (trackingCoroutine == null)
-            {
-                trackingCoroutine = StartCoroutine(TrackPlayerCoroutine());
-            }
-        }
-        else
+        if (player == null)
         {
             currentPlayer = null;
             // Stop the coroutine if it is running
@@ -70,6 +66,16 @@ public class Turret : MonoBehaviour, IOverseerListener, ICanBeDisabled
                 StopCoroutine(trackingCoroutine);
                 trackingCoroutine = null;
             }
+
+            return;
+
+        }
+
+        currentPlayer = player;
+        // Start the coroutine if it is not already running
+        if (trackingCoroutine == null)
+        {
+            trackingCoroutine = StartCoroutine(TrackPlayerCoroutine());
         }
     }
 
