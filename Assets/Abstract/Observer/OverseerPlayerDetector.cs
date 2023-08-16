@@ -26,28 +26,41 @@ public class OverseerPlayerDetector : MonoBehaviour
     public string
         PlayerSeen = "event:/Overseer/PlayerSeen";
 
+    public OverseerViewTargeter viewTargeter;
+    float playerTrackDuration = 3f;
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerManager manager = other.gameObject.GetComponent<PlayerManager>();
         if (manager != null)
         {
             Player = manager;
+
+
             RuntimeManager.PlayOneShot(PlayerSeen, transform.position);
 
             if (CanDoDamage) 
                 StartCoroutine(ApplyDamage());
 
-            if(Turrets != null)
-                UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
-           
+            if (hasTurrets)
+            {
+                print("Overseer: " + transform.root.name + " has turrets enabled");
+                if (Turrets != null)
+                    UpdateTurrets(true); //Turrets can try and see the player - this passes a referenece to the turrets to enable them
+
+                GatherTurrets();
+            }
              //if its null nothing will happen else it will be cleared
-            GatherTurrets(); //hence only updating needs to fall within the check. GatherTurrets will just return null
+            //if(hasTurrets) GatherTurrets(); //hence only updating needs to fall within the check. GatherTurrets will just return null
         }
     }
 
     private void Awake()
     {
-        RayOrigin = transform.parent;
+        RayOrigin = transform.parent; //this objeccts pivot 
+        viewTargeter = transform.root.GetComponentInChildren<OverseerViewTargeter>();
+
+        if(hasTurrets) Turrets = new List<IOverseerListener>();
     }
 
     /// <summary>
@@ -65,6 +78,7 @@ public class OverseerPlayerDetector : MonoBehaviour
             {
                 if (HitObject.transform.GetComponent<PlayerManager>() == Player)
                 {
+                    viewTargeter.PlayerSeen(playerTrackDuration, Player.gameObject); //this will allow the overseer to track the player for as long as it is dealing damage
                     CanDoDamage = false;
                     Player.OnDamageRecieved(DAMAGE_BASE * DamageScalar);
                     yield return new WaitForSecondsRealtime(DamageBufferTime);
@@ -85,7 +99,7 @@ public class OverseerPlayerDetector : MonoBehaviour
         if (other.gameObject == Player.gameObject) 
         { 
             Player = null;
-            UpdateTurrets(true); //This will clear the player val of turrets referenced by this script
+            if(hasTurrets) UpdateTurrets(true); //This will clear the player val of turrets referenced by this script
         }
     }
 

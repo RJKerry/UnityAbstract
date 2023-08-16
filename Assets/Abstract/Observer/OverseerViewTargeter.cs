@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class OverseerViewTargeter : MonoBehaviour
 {
@@ -17,17 +19,18 @@ public class OverseerViewTargeter : MonoBehaviour
     //public SelectorTypes InitialState; //static
     public SelectorTypes selectorType; //dynamic
 
+    public bool tracking;
 
     private void Awake()
     {
         InitNewTarget();
 
-        TargetSelectorType(selectorType);
+        //TargetSelectorType(selectorType);
     }
 
     private void Update()
     {
-        if (Active) { //while updating if moving
+        if (Active && !tracking) { //while updating if moving
             if (eTime >= tTime)
             {
                 InitNewTarget();
@@ -40,6 +43,23 @@ public class OverseerViewTargeter : MonoBehaviour
         }
     }
 
+    public void PlayerSeen(float duration, GameObject toTrack) 
+    {
+        if(!tracking) StartCoroutine(TrackPlayer(duration, toTrack));
+    }
+    private IEnumerator TrackPlayer(float duration, GameObject toTrack) 
+    {
+        tracking = true;
+
+        var oldPos = viewTarget.transform.position;
+
+        viewTarget.transform.parent = toTrack.transform;
+        viewTarget.transform.position = toTrack.transform.position;
+        yield return new WaitForSecondsRealtime(duration);
+        viewTarget.transform.parent = this.transform;
+        viewTarget.transform.position = oldPos;
+        tracking = false;
+    }
 
     public int TargetSelectorType(SelectorTypes newState)
     {
@@ -107,5 +127,5 @@ public class OverseerViewTargeter : MonoBehaviour
 public enum SelectorTypes
 { 
     LinearSwitch,
-    RandomSwitch,
+    RandomSwitch
 };
