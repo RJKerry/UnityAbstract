@@ -15,7 +15,7 @@ public class ItemManager : MonoBehaviour
 
     public GameObject itemSocket;
     
-    public ItemSlotManager slotManager;
+    //public ItemSlotManager slotManager;
     private GameObject HUD;
 
     public void UseItem()
@@ -35,7 +35,7 @@ public class ItemManager : MonoBehaviour
     {
         ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY -- ALSO MAKES A BLANK OBJECT, 
         itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
-        slotManager = FindObjectOfType<ItemSlotManager>();
+       // slotManager = FindObjectOfType<ItemSlotManager>();
         HUD = GameObject.FindGameObjectWithTag("HUD");
 
         if (HUD != null)
