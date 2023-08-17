@@ -7581,6 +7581,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2566291578267452361, guid: 1f0d59dd82a75e049b1083f3f2b26b9c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6887103150176197005, guid: 1f0d59dd82a75e049b1083f3f2b26b9c, type: 3}
       propertyPath: m_Icon
       value: 
@@ -24882,7 +24886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4838975993091126165, guid: 7f6c86f765646aa458d5d532aae25818, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.084311806
+      value: 0.08431178
       objectReference: {fileID: 0}
     - target: {fileID: 4838975993091126165, guid: 7f6c86f765646aa458d5d532aae25818, type: 3}
       propertyPath: m_LocalRotation.y
@@ -24890,7 +24894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4838975993091126165, guid: 7f6c86f765646aa458d5d532aae25818, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0843118
+      value: 0.084311776
       objectReference: {fileID: 0}
     - target: {fileID: 6692173144479904218, guid: 7f6c86f765646aa458d5d532aae25818, type: 3}
       propertyPath: m_Sprite
@@ -26501,7 +26505,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -31815,7 +31819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3852118383915492772, guid: 3744657c64fcb9a4a92d010d8ba7481e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.83978605
+      value: 0.839786
       objectReference: {fileID: 0}
     - target: {fileID: 3852118383915492772, guid: 3744657c64fcb9a4a92d010d8ba7481e, type: 3}
       propertyPath: m_LocalRotation.x
