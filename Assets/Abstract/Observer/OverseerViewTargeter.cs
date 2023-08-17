@@ -75,6 +75,12 @@ public class OverseerViewTargeter : MonoBehaviour
         return currentTargetIndex;
     }
 
+    /// <summary>
+    /// Linear increment in the index of target progression
+    /// wraps if required
+    /// </summary>
+    /// <param name="oldTargetIndex"></param>
+    /// <returns></returns>
     public int LinearSwitch(int oldTargetIndex)
     {
         if(POIs.Count < 1)

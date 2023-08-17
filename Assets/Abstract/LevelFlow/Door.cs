@@ -25,6 +25,9 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
     public int OpenOffset = 3;
     public float UnlockDelay = 5f;
 
+    public bool paused = false; //In case of player getting caught in the door
+    private PlayerManager player;
+
     /// <summary>
     /// References to FMOD events
     /// </summary>
@@ -53,8 +56,11 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
 
             while (eTime < tTime)
             {
-                transform.position = Vector3.Lerp(i == 0 ? StartPos : EndPos, i == 0 ? EndPos : StartPos, eTime / tTime);
-                eTime += Time.deltaTime;
+                if (!paused)
+                {
+                    transform.position = Vector3.Lerp(i == 0 ? StartPos : EndPos, i == 0 ? EndPos : StartPos, eTime / tTime);
+                    eTime += Time.deltaTime;
+                }
                 yield return null;
             }
             yield return new WaitForSecondsRealtime(2f);
@@ -83,5 +89,22 @@ public class Door : MonoBehaviour, ITerminalListener, IInteractable
         UnlockedLight.gameObject.SetActive(true);
         unlocked = true;
         FMODUnity.RuntimeManager.PlayOneShot(DoorUnlock, transform.position);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        player = other.gameObject.GetComponent<PlayerManager>();
+        if (player == null)
+            return;
+
+        paused = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.GetComponent<PlayerManager>() != player)
+            return;
+
+        paused = false;
     }
 }
