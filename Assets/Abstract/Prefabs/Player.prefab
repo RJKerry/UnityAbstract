@@ -221,7 +221,7 @@ MonoBehaviour:
   rawMovementInput: {x: 0, y: 0, z: 0}
   rawLookInput: {x: 0, y: 0, z: 0}
   cameraForward: {x: 0, y: 0, z: 0}
-  movementSpeed: 5
+  movementSpeed: 4
   mouseSpeed: 100
   interactDist: 5
   canRecieveInput: 1

@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
         IDamageable damageableObj = collision.gameObject.GetComponent<IDamageable>();
         if (damageableObj != null)
         {
-            damageableObj.OnDamageRecieved(0.2f);
+            damageableObj.OnDamageRecieved(0.05f);
             Destroy(gameObject);
         }
 
