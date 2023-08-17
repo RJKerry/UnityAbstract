@@ -46,6 +46,12 @@ public class TerminalCanvasController : MonoBehaviour
     public void receiveButtonDictionary(Dictionary<ITerminalListener, Button> IncomingButtonDictionary)
     {
         buttonDictionary = IncomingButtonDictionary;
+        if (buttonDictionary.Count == 1)
+        {
+            rightButton.gameObject.SetActive(false);
+            leftButton.gameObject.SetActive(false);
+        }
+
     }
 
     /// <summary>
