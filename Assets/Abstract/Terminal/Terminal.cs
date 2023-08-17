@@ -85,8 +85,6 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         if (InteractingPlayer != null) //Already hooked into a player? Do not register new interacts.
             return;
 
-        Screen.Activated(); //Currently a sprite sequence
-
         GatherTerminalListeners();
 
         RuntimeManager.PlayOneShot(PowerOn, transform.position);
@@ -99,6 +97,11 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         messageSource.TeleportTo(StandPosition.transform.position); //Refactor to smooth moveto
 
         InteractingPlayer = messageSource;
+
+        Screen.receiveButtonDictionary(ActiveListeners);
+
+        Screen.Activated(); //Currently a sprite sequence
+
     }
 
     /// <summary>
@@ -109,6 +112,8 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public virtual void GatherTerminalListeners()
     {
         var listeners = FindObjectsOfType<MonoBehaviour>().OfType<ITerminalListener>();
+
+
         foreach (var listener in listeners) 
         {
             if (listener.IDGroup == IDGroup)
@@ -128,10 +133,9 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
     public Button GenerateInteractionButton(ITerminalListener listener) //Could load a prefab from resources or create a whole new button 
     {
         GameObject GeneratedButtonObject = Instantiate(ButtonTemplate, Vector3.zero, Quaternion.identity);
-        GeneratedButtonObject.transform.SetParent(TerminalCanvas.transform, false);
+        //GeneratedButtonObject.transform.SetParent(TerminalCanvas.transform, false);
         Button GeneratedButton = GeneratedButtonObject.GetComponent<Button>();
         GeneratedButton.image.sprite = listener.TerminalButtonIcon;
-
         GeneratedButton.onClick.AddListener(listener.OnActivated);
         
         return GeneratedButton;

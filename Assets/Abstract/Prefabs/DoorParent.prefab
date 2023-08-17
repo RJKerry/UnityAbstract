@@ -43,6 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3422209319964489453}
   - component: {fileID: 3422209319964489454}
+  - component: {fileID: 2215014482782449577}
   m_Layer: 0
   m_Name: LockedLight
   m_TagString: Untagged
@@ -127,6 +128,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2215014482782449577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3422209319964489452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &3422209320598406870
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +673,7 @@ MonoBehaviour:
   LockedLight: {fileID: 0}
   UnlockedLight: {fileID: 0}
   _IDGroup: 1
-  _TerminalButtonIcon: {fileID: 21300000, guid: 1bfb1b224548b41448a8246714b1d441, type: 3}
+  _TerminalButtonIcon: {fileID: 21300000, guid: e8afd628d137db64a9b11883ff3e6eca, type: 3}
   OpenOffset: 3
   UnlockDelay: 5
   DoorOpen: event:/Door/DoorOpen

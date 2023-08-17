@@ -1053,7 +1053,7 @@ MonoBehaviour:
   OverseerView: {fileID: 0}
   posessionTime: 5
   _IDGroup: 0
-  _TerminalButtonIcon: {fileID: 21300000, guid: 657d0f01d0f12ec42b847fa505c1bfee, type: 3}
+  _TerminalButtonIcon: {fileID: 21300000, guid: 0853268ffbd13fe43a6491f9a8a790a5, type: 3}
 --- !u!1 &3852118383915492773
 GameObject:
   m_ObjectHideFlags: 0

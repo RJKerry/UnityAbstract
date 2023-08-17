@@ -450,7 +450,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 17c44fb3e5be9644586a0728a5f5a386, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _IDGroup: 5
-  _TerminalButtonIcon: {fileID: 21300000, guid: e2867fc1f5ada0e4abafa5d0cae0b576, type: 3}
+  _TerminalButtonIcon: {fileID: 21300000, guid: dd50f34259ee27b419b8be1e90be0f66, type: 3}
   Player: {fileID: 0}
   eTime: 0
   tTime: 6.8
