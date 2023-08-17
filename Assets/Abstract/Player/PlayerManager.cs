@@ -10,12 +10,14 @@ public class PlayerManager : HealthHandler
     private string lastSceneName;
     private string DeathScene;
     private GameObject DeathReloadData;
+    private HealthController healthController;
     public override void Init()
     {
         base.Init();
         DeathScene = "Death";
         DeathReloadData = Resources.Load<GameObject>("DeathScreenLoadPackage");
         playerCapsule = GetComponent<CharacterController>();
+        healthController = this.transform.Find("HUD-New").GetComponent<HealthController>();
     }
 
     public Vector3 PlayerPosition(bool AddHalfHeightToUp)
@@ -25,7 +27,7 @@ public class PlayerManager : HealthHandler
 
     public override void DamageEffect(float damage)
     {
-
+        healthController.changeHealth(Health);
     }
 
     public override void DeathEffect()
