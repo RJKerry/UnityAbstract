@@ -55,11 +55,11 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     {
         playerControls = new PlayerControls();
         playerControls.DefaultPlayer.SetCallbacks(this);
-
         playerCharacterController = GetComponent<CharacterController>();
         playerPauseController = GetComponent<PauseController>();
         playerItemManager = GetComponent<ItemManager>();
         cameraObject = GetComponentInChildren<CinemachineVirtualCamera>().gameObject;
+
     }
 
     /// <summary>
@@ -206,10 +206,14 @@ public class PlayerInputManager : MonoBehaviour, PlayerControls.IDefaultPlayerAc
     private void OnEnable()
     {
         playerControls.Enable();
+        //disable mouse cursor
+        Cursor.visible = false;
     }
 
     private void OnDisable()
     {
+        //enable cursor
+        Cursor.visible = true;
         playerControls.Disable();
     }
     #endregion

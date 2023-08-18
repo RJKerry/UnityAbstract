@@ -99,7 +99,7 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         InteractingPlayer = messageSource;
 
         Screen.receiveButtonDictionary(ActiveListeners);
-
+        Cursor.visible = true;
         Screen.Activated(); //Currently a sprite sequence
 
     }
@@ -168,6 +168,8 @@ public class Terminal : MonoBehaviour, IInteractable, PlayerControls.ITerminalIn
         TerminalControls.TerminalInput.Disable();
 
         SetCameraPriority(0); //
+
+        Cursor.visible = false;
 
         yield return new WaitForSecondsRealtime(DetachBuffer); //Prevents player moving preemptive to the camera switchback
 
