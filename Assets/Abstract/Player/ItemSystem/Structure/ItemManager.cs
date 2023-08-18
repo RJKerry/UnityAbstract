@@ -14,9 +14,6 @@ public class ItemManager : MonoBehaviour
     private int maxItems = 3;
 
     public GameObject itemSocket;
-    
-    //public ItemSlotManager slotManager;
-    private GameObject HUD;
 
     public void UseItem()
     {
@@ -36,17 +33,6 @@ public class ItemManager : MonoBehaviour
         ownedItems.Add(ScriptableObject.CreateInstance<TestItem>()); //TEMPORARY -- ALSO MAKES A BLANK OBJECT, 
         itemSocket = GameObject.FindGameObjectWithTag("ItemSocket"); 
        // slotManager = FindObjectOfType<ItemSlotManager>();
-        HUD = GameObject.FindGameObjectWithTag("HUD");
-
-        if (HUD != null)
-        {
-            Debug.Log("Valid");
-        }
-        else
-        {
-            Debug.Log("Not Valid");
-        }
-
         CycleItem(0, WeaponSwitchTypes.Absolute);
     }
     
@@ -86,7 +72,6 @@ public class ItemManager : MonoBehaviour
 
     public void SwitchToNewItem()
     {
-        HUD?.GetComponent<UIController>().selectSlot(CurrentItemIndex);
         if (ownedItems[CurrentItemIndex] != null)
         {
             GameObject equippedItem = Instantiate(ownedItems[CurrentItemIndex], Vector3.zero, Quaternion.identity, itemSocket.transform).GameObject();
@@ -99,7 +84,6 @@ public class ItemManager : MonoBehaviour
         if (ownedItems.Count < maxItems)
         {
             ownedItems.Add(newItem);
-            HUD.GetComponent<UIController>().getItems();
             return true;
         }
         return false;

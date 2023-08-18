@@ -8,28 +8,33 @@ using FMODUnity;
 
 public class OverseerPlayerDetector : MonoBehaviour
 {
-    public const float DAMAGE_BASE = 0.005f;
-    public float DamageScalar = 1f;
+    private const float DAMAGE_BASE = 0.005f; //Base proportion 0.0 to 1.0 of damage to be done - keeps the functional metric consistent 
+    public float DamageScalar = 1f; //this can be scaled during design to "taste"
 
-    float DamageBufferTime = 0.25f;
+    float DamageBufferTime = 0.25f; //How long it waits after dealing damage before it can damage again
 
-    public PlayerManager Player;
+    private PlayerManager Player;
 
     private Transform RayOrigin;
 
-    bool CanDoDamage = true;
+    public bool CanDoDamage = true; 
 
     public int TurretIDGroup = 0;
     public List<IOverseerListener> Turrets;
     public bool hasTurrets = false;
 
-    public string
+    public string //fmod sfx paths
         PlayerSeen = "event:/Overseer/PlayerSeen",
         PlayerLost = "event:/Overseer/PlayerLost";
 
     public OverseerViewTargeter viewTargeter;
     float playerTrackDuration = 3f;
 
+    /// <summary>
+    /// if the player is detected by the cone collider representing
+    /// the overseers view
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         PlayerManager manager = other.gameObject.GetComponent<PlayerManager>();
@@ -50,8 +55,6 @@ public class OverseerPlayerDetector : MonoBehaviour
                 GatherTurrets();
                 UpdateTurrets(false);
             }
-             //if its null nothing will happen else it will be cleared
-            //if(hasTurrets) GatherTurrets(); //hence only updating needs to fall within the check. GatherTurrets will just return null
         }
     }
 
@@ -94,6 +97,11 @@ public class OverseerPlayerDetector : MonoBehaviour
         yield return null;
     }
 
+    /// <summary>
+    /// remove player ref if it was player that left
+    /// ping turrets (if it has them) to stop shooting
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == Player.gameObject) 
